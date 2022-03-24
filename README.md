@@ -4,5 +4,5 @@
 
 | Name Surname (initials) | GUID                                     |
 | ----------------------- | ---------------------------------------- |
-| AB                      | `{FD9D086C-532F-4AAC-BB99-69D7798837D8}` |
-| Jan Kowalski            | `{44FBFCF5-4430-4964-878D-1867DC679E0D}` |
+| Mateusz Kaczmarski      | `{5BF3C307-7DDB-4798-A415-DA204EC28388}` |
+| Krzysztof Izydorczyk    | `{6D742562-805E-4AA8-ABFC-B6A80E9A89AF}` |
