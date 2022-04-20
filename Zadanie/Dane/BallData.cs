@@ -4,6 +4,7 @@ namespace Data
 {
     public abstract class ApiData
     {
+        public abstract int Radius { get; }
         public static ApiData CreateBall()
         {
             return new BallData();
@@ -11,7 +12,7 @@ namespace Data
     }  
     internal class BallData : ApiData 
     {
-
+        public override int Radius => 10;
     }
     
 }
