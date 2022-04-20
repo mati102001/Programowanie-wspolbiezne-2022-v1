@@ -4,9 +4,6 @@ using System.Text;
 
 namespace Logic
 {
-<<<<<<<< HEAD:Zadanie/Logic/Class1.cs
-    internal class Class1
-========
     public class Ball
     {
         private int x { get; set; }
