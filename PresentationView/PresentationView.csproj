@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0B9812B2-1CED-4021-8419-82539F75B0FA}</ProjectGuid>
+    <ProjectGuid>{F073D412-1A87-4A1E-934F-E62649C9D5DA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Zadanie1</RootNamespace>
-    <AssemblyName>Zadanie1</AssemblyName>
+    <RootNamespace>PresentationView</RootNamespace>
+    <AssemblyName>PresentationView</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,20 +51,19 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="PresentationView\App.xaml">
+    <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="PresentationView\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Data\Class1.cs" />
-    <Compile Include="PresentationView\App.xaml.cs">
+    <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PresentationView\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -93,12 +92,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PresentationView\App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\" />
-    <Folder Include="PresentationModel\" />
-    <Folder Include="PresentationViewModel\" />
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

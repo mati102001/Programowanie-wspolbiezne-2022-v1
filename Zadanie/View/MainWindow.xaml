@@ -7,6 +7,41 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#FFA0FF46" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Content="Button" Grid.Column="1" Margin="0,0,0,0"  Grid.RowSpan="1" Grid.Row="9"/>
+        <Button Content="Button" Grid.Column="9" Margin="0,0,0,0"  Grid.RowSpan="1" Grid.Row="9" Click="Button_Click"/>
+        <TextBox Grid.ColumnSpan="3" TextWrapping="Wrap" Text="TextBox" Grid.Column="4" Margin="0,0,0,0" Grid.RowSpan="1" Grid.Row="9" />
+        <Rectangle Grid.Column="1" Grid.ColumnSpan="9" Stroke="White"  Grid.RowSpan="7" Fill="#FFB4FFA4" Margin="0,0,0,0" Grid.Row="1"/>
     </Grid>
 </Window>
