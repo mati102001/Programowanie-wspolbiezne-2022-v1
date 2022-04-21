@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Logic;
+
 namespace Model
 {
     public abstract class BallAbstract

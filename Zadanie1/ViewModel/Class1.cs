@@ -35,7 +35,7 @@ namespace ViewModel
         }
 
         public ViewModelMainWindow()
-        {
+    {
             SimulationButtonClicked = new CommandHandler(StartSimulation, CanStartSimulation);
             BallsNumber = "0";
 
@@ -46,7 +46,7 @@ namespace ViewModel
             //{
             //    _balls.Add(new Ball { BallX = element.x, BallY = element.y, BallSize = element.size });
             //}
-        }
+    }
 
         private void StartSimulation(object value)
         {
