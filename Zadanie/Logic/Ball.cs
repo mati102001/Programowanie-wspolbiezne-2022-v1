@@ -6,12 +6,12 @@ namespace Logic
 {
     public class Ball
     {
-        private int x { get; set; }
-        private int y { get; set; }
-        private int r { get; set; }
+        public float x { get; private set; }
+        public float y { get; private set; }
+        public int r { get; private set; }
 
-        public Ball(int x, int y, int r)
-    {
+        public Ball(float x, float y, int r)
+         {
             this.x = x;
             this.y = y;
             this.r = r;
