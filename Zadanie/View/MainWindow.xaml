@@ -3,11 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:View"
+        xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <viewmodel:ViewModelMainWindow x:Key="vm"></viewmodel:ViewModelMainWindow>
+    </Window.Resources>
+    <Grid DataContext="{Binding Source={StaticResource vm}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="579*"/>
+            <ColumnDefinition Width="221*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,79,0">
+            <ItemsControl Name="Balls" ItemsSource="{Binding Balls}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Canvas>
+                            <Ellipse Stroke="Black" Fill="Red" Width="{Binding BallSize}" Height="{Binding BallSize}" Canvas.Left="{Binding BallX}" Canvas.Top="{Binding BallY}"/>
+                        </Canvas>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+        <TextBox x:Name="BallsNumberTextBox" HorizontalAlignment="Left" Margin="9,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="40" FontSize="22" TextAlignment="Center" Text="{Binding BallsNumber}" Grid.Column="1" MaxLines="1" MaxLength="11"/>
+        <TextBlock x:Name="BallsNumberTextBlock" HorizontalAlignment="Left" Margin="9,50,0,0" TextWrapping="Wrap" Text="Liczba Kul" VerticalAlignment="Top" Height="37" Width="148" FontSize="24" TextAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Column="1"/>
+        <Button x:Name="StartSimulationButton" Content="Rozpocznij Symulację" HorizontalAlignment="Left" Margin="9,217,0,0" VerticalAlignment="Top" Height="44" Width="148" FontSize="16" FontFamily="Segoe UI Light" RenderTransformOrigin="1,0" Grid.Column="1" Command="{Binding SimulationButtonClicked}"/>
 
-  
-    
-
+    </Grid>
 </Window>
