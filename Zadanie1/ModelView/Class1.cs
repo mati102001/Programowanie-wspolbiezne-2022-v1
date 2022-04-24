@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model
+namespace ModelView
 {
     public class Class1
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model
+namespace Data
 {
     public class Class1
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model
+namespace Logic
 {
     public class Class1
     {
