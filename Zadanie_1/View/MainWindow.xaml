@@ -12,8 +12,8 @@
             MaxLength="4"
             FontSize="20pt"
             Padding="0 0 0 0"
+            Text= "{Binding BallNumber, UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap"
-            Text="liczba"
             VerticalAlignment="Top"
             Height="50" Width="100"
             Canvas.Left="340" Canvas.Top="350" />
@@ -34,11 +34,19 @@
 
         <Rectangle
             Stroke="Black"
-            StrokeThickness="5"
+            StrokeThickness="1"
             Margin="10 10 10 10"
             Canvas.Left="125" Canvas.Top="0"           
             Height="300" Width="500" />
 
-        <Ellipse Width="10" Height="10" Fill="Black" Canvas.Left="200" Canvas.Top="200"/>
+        <ItemsControl Name="Balls" ItemsSource="{Binding Balls}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Canvas>
+                        <Ellipse Stroke="Black" Fill="Red" Width="10" Height="10" Canvas.Left="10" Canvas.Top="10"/>
+                    </Canvas>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Canvas>
 </Window>
