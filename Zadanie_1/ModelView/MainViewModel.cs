@@ -9,7 +9,7 @@ namespace ModelView
         public event PropertyChangedEventHandler 
             PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
