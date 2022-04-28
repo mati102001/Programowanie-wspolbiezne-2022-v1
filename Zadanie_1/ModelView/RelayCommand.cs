@@ -9,10 +9,16 @@ namespace ModelView
     {
         readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;
+        private object v;
 
         public RelayCommand(Action<object> execute)
             : this(execute, null)
         {
+        }
+
+        public RelayCommand(object v)
+        {
+            this.v = v;
         }
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)

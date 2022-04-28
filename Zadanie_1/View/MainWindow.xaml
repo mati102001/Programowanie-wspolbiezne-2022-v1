@@ -12,7 +12,7 @@
             MaxLength="4"
             FontSize="20pt"
             Padding="0 0 0 0"
-            Text= "{Binding BallNumber, UpdateSourceTrigger=PropertyChanged}"
+            Text= "{Binding BallNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Height="50" Width="100"
@@ -30,7 +30,8 @@
             VerticalAlignment="Center"         
             Height="50" Width="100"
             Canvas.Left="490" Canvas.Top="350"
-            HorizontalAlignment="Center" />
+            HorizontalAlignment="Center" 
+            Command="{Binding Start}"/>
 
         <Rectangle
             Stroke="Black"
@@ -39,11 +40,11 @@
             Canvas.Left="125" Canvas.Top="0"           
             Height="300" Width="500" />
 
-        <ItemsControl Name="Balls" ItemsSource="{Binding Balls}">
+        <ItemsControl Name="Balls" ItemsSource="{Binding Balls, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Canvas>
-                        <Ellipse Stroke="Black" Fill="Red" Width="10" Height="10" Canvas.Left="10" Canvas.Top="10"/>
+                        <Ellipse Stroke="Black" Fill="Red" Width="10" Height="10" Canvas.Left="{Binding BallX}" Canvas.Top="{Binding BallY}"/>
                     </Canvas>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
