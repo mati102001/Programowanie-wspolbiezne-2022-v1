@@ -1,8 +1,7 @@
-﻿using ModelPresentation;
-using System;
+﻿using System;
 using System.Collections;
 
-namespace ModelPresentation
+namespace ModelAPI
 {
     public abstract class Model
     {

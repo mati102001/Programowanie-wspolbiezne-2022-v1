@@ -1,12 +1,13 @@
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Data
 {
+    [TestClass]
     public class DataTest
     {
         private DataAbstractApi api;
 
-        [Test]
+        [TestMethod]
         public void CreateDataApiTest()
         {
             api = DataAbstractApi.CreateDataLayer();

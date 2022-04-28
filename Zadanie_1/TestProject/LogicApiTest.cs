@@ -9,6 +9,7 @@ namespace LogicTest
     {
         private LogicAPI api;
         private IList list;
+
         [TestMethod]
         public void Test_Constructor_Create()
         {

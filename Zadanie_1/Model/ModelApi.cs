@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Logic;
 
-namespace Model
+namespace ModelAPI
 {
     internal class ModelApi : Model
     {
