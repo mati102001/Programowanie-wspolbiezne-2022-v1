@@ -11,7 +11,6 @@ namespace ModelPresentation
         {
             return new ModelApi();
         }
-
         public abstract void Start(IList balls);
     }
 }

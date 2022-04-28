@@ -9,9 +9,6 @@ namespace Logic
     {
         public static LogicAPI CreateBallAPI() => new BallFactory();
         public abstract IList CreateBalls(int number, double XLimit, double YLimit);
-
         public abstract void Start();
-
-
     }
 }

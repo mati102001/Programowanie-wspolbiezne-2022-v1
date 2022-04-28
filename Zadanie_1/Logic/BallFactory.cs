@@ -41,8 +41,8 @@ namespace Logic
             double y;
             for (int i = 0; i < number; i++)
             {
-                x = rand.Next(10, 604);
-                y = rand.Next(10, 384);
+                x = rand.Next(140, (int) XLimit-10);
+                y = rand.Next(20, (int) YLimit-10);
                 balls.Add(new Ball(x, y));
             }
             return balls;
@@ -78,8 +78,8 @@ namespace Logic
             double diffrence_y;
             double diffrence_x2;
             double diffrence_y2;
-            x_new = rand.Next(10, 604) + rand.NextDouble();
-            y_new = rand.Next(10, 384) + rand.NextDouble();
+            x_new = rand.Next(140, 630);
+            y_new = rand.Next(20, 310); 
             while (true)
             {
                 diffrence_x = ball.X - x_new;
@@ -100,8 +100,8 @@ namespace Logic
                     ball.Y += move_y;
                 }
                 //nextDouble zwraca losową liczbę zmiennoprzecinkową
-                x_new = rand.Next(10, 604) + rand.NextDouble();
-                y_new = rand.Next(10, 384) + rand.NextDouble();
+                x_new = rand.Next(140, 630);
+                y_new = rand.Next(20, 310);
             }
         }
 

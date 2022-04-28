@@ -13,13 +13,10 @@ namespace ModelView
             private readonly Model _model;
             private IList _balls;
      
-
-
             public ViewModelWindow()
             {
             _model = Model.CreateApi();
             Start = new RelayCommand(StartAction);
-
              }
 
         private void StartAction(object obj)
@@ -37,8 +34,8 @@ namespace ModelView
                         return;
                     if (value < 0)
                         value = 0;
-                    if (value > 2137)
-                        value = 2137;
+                    if (value > 2000)
+                        value = 2000;
                     _ballNumber = value;
                     OnPropertyChanged(nameof(BallNumber));
                 }
@@ -46,7 +43,6 @@ namespace ModelView
 
         public ICommand Start { get; set; }
        
-
         public IList Balls
             {
                 get => _balls;
