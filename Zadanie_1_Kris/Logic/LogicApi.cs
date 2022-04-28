@@ -7,13 +7,9 @@ namespace Logic
 {
     public abstract class LogicApi
     {
-        private int boardWidth;
+        public abstract int boardWidth { get; }
 
-        private int boardHeight;
-
-        private Random r;
-
-        private DataAPI dataLayer;
+        public abstract int boardHeight { get; }
 
         public abstract void Add();
 
@@ -27,31 +23,27 @@ namespace Logic
 
         public abstract int Count();
 
-        public LogicApi createLayer(int width, int height, DataAPI data = default(DataAPI))
+        public static LogicApi createLayer(int width, int height)
         {
-            return new BallLogic(width, height, data);
+            return new BallLogic(width, height);
         }
 
-        public void Start()
-        {
-            
-        }
+        public abstract void Start();
 
-        public void Stop()
-        {
-            
-        }
+        public abstract void Stop();
 
-        public double GetBallRadius(Data.Object ball)
-        {
-            return dataLayer.GetBallRadius(ball);
-        }
+        public abstract double GetBallRadius(Data.Object ball);
 
         internal class BallLogic : LogicApi
         {
-            public BallLogic(int width, int height, DataAPI dataLayerAPI)
+            public override int boardWidth { get; }
+
+            public override int boardHeight { get; }
+            private Random r;
+            private DataAPI dataLayer;
+            public BallLogic(int width, int height)
             {
-                dataLayer = dataLayerAPI;
+                dataLayer = DataAPI.Create();
                 boardWidth = width;
                 boardHeight = height;
                 r = new Random();
@@ -89,6 +81,19 @@ namespace Logic
             public override void Remove(Data.Object obiekt)
             {
                 dataLayer.Remove(obiekt);
+            }
+            public override void Start()
+            {
+
+            }
+
+            public override void Stop()
+            {
+
+            }
+            public override double GetBallRadius(Data.Object ball)
+            {
+                return dataLayer.GetBallRadius(ball);
             }
         }
         

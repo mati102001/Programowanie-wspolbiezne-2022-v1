@@ -19,9 +19,9 @@ namespace Model
 
         public Canvas Canvas { get => canvas; set => canvas = value; }
 
-        public ModelApi(int width, int height, LogicApi api = null)
+        public ModelApi(int width, int height)
         {
-            //logicAPI = api ?? logicAPI.createLayer(width, height);
+            logicAPI = LogicApi.createLayer(width, height);
             ellipses = new List<Ellipse>();
             Canvas = new Canvas {Width=width, Height = height, Background= Brushes.Yellow };
             Canvas.VerticalAlignment = System.Windows.VerticalAlignment.Top;
@@ -31,14 +31,14 @@ namespace Model
         }
         public void CreateBall()
         {
-            //logicAPI.Add();
-            //int ballNumer = logicAPI.Count() - 1;
-            //double radius = logicAPI.GetBallRadius(logicAPI.Get(ballNumer));
-            //double x = logicAPI.GetX(ballNumer);
-            //double y = logicAPI.GetY(ballNumer);
-            double radius = 20;
-            double x = r.Next(0, 450);
-            double y = r.Next(0, 300);
+            logicAPI.Add();
+            int ballNumer = logicAPI.Count() - 1;
+            double radius = logicAPI.GetBallRadius(logicAPI.Get(ballNumer));
+            double x = logicAPI.GetX(ballNumer);
+            double y = logicAPI.GetY(ballNumer);
+            //double radius = 20;
+            //double x = r.Next(0, 450);
+            //double y = r.Next(0, 300);
             Ellipse newEllipse = new Ellipse { Width = radius * 2, Height = radius * 2, Fill = Brushes.Red, StrokeThickness = 2, Stroke = Brushes.Black };
             ellipses.Add(newEllipse);
 
