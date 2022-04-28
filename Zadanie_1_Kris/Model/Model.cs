@@ -22,6 +22,7 @@ namespace Model
         public ModelApi(int width, int height)
         {
             logicAPI = LogicApi.createLayer(width, height);
+            logicAPI.CordinatesChanging += (sender, args) => RefreshElipsesCords();
             ellipses = new List<Ellipse>();
             Canvas = new Canvas {Width=width, Height = height, Background= Brushes.Yellow };
             Canvas.VerticalAlignment = System.Windows.VerticalAlignment.Top;
@@ -30,7 +31,14 @@ namespace Model
             r = new Random();
         }
 
-
+        private void RefreshElipsesCords()
+        {
+            for (int i = 0; i < logicAPI.Count(); i++)
+            {
+                Canvas.SetLeft(ellipses[i], logicAPI.Get(i).X);
+                Canvas.SetTop(ellipses[i], logicAPI.Get(i).Y);
+            }
+        }
 
         public void CreateBall()
         {

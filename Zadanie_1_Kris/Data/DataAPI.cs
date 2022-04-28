@@ -25,9 +25,9 @@ namespace Data
             return ((Ball)ball).BallRadius;
         }
 
-        public static Object CreateBall(double x, double y,  double r)
+        public static Object CreateBall(double x, double y, double speedX, double speedY, double r)
         {
-            return new Ball(x, y, r);
+            return new Ball(x, y, r, speedX, speedY);
         }
 
         internal class ObjectBoard : DataAPI
