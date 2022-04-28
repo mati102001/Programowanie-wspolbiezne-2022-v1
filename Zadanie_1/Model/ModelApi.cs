@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using Logic;
 
-namespace ModelPresentation
+namespace Model
 {
-    public class ModelApi : Model
+    internal class ModelApi : Model
     {
         private readonly LogicAPI _logic;
         public override IList Balls(int ballNumber)

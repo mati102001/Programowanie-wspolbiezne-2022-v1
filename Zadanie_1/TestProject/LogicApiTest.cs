@@ -1,21 +1,28 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Logic;
+using System.Collections;
 
-namespace Logic
+namespace LogicTest
 {
-    public abstract class LogicApiTest
+    [TestClass]
+    public class LogicTestApi
     {
-       
-        [SetUp]
-        public void Setup()
+        private LogicAPI api;
+        private IList list;
+        [TestMethod]
+        public void Test_Constructor_Create()
         {
-          
+            api = LogicAPI.CreateBallAPI();
+            Assert.IsNotNull(api);
         }
 
-        [Test]
-        public void CreateBallsTests()
+        [TestMethod]
+        public void Create_IList()
         {
-            Assert.AreEqual(0, api.GetBalls().Count);
-            api.CreateBalls(3);
-            Assert.AreEqual(3, api.GetBalls().Count);
+            api = LogicAPI.CreateBallAPI();
+            list = api.CreateBalls(10, 450, 500);
+            Assert.IsNotNull(list);
+            Assert.AreEqual(10, list.Count);
         }
     }
+}
