@@ -8,26 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    // internal class BallFactory : LogicAPI
-    // {
-    /*public override IList CreateBalls(int number, double XLimit, double YLimit)
-    {
-        Random random = new Random();
-        ObservableCollection<Ball> ballList = new ObservableCollection<Ball>();
-
-        double x, y, r;
-
-        for (int i = 0; i < number; i++)
-        {
-            r = 30;
-            x = random.Next(10, (int)(XLimit - r) - 1) + random.NextDouble();
-            y = random.Next(10, (int)(YLimit - r) - 1) + random.NextDouble();
-
-            ballList.Add(new Ball(x, y));
-        }
-        return ballList;
-    }*/
-    public class BallFactory : LogicAPI
+    internal class BallFactory : LogicAPI
     {
         Random rand = new Random();
         private List<Task> tasks = new List<Task>();
@@ -39,10 +20,12 @@ namespace Logic
             tasks.Clear();
             double x;
             double y;
+            limitX = XLimit;
+            limitY = YLimit;
             for (int i = 0; i < number; i++)
             {
-                x = rand.Next(140, (int) XLimit-10);
-                y = rand.Next(20, (int) YLimit-10);
+                x = rand.Next(140, (int) limitX-10);
+                y = rand.Next(20, (int) limitY-10);
                 balls.Add(new Ball(x, y));
             }
             return balls;
@@ -78,8 +61,8 @@ namespace Logic
             double diffrence_y;
             double diffrence_x2;
             double diffrence_y2;
-            x_new = rand.Next(140, 630);
-            y_new = rand.Next(20, 310); 
+            x_new = rand.Next(140, (int) limitX -10);
+            y_new = rand.Next(20, (int) limitY -10); 
             while (true)
             {
                 diffrence_x = ball.X - x_new;
@@ -95,17 +78,17 @@ namespace Logic
                 move_y = diffrence_y2 / d;
                 for (int i = 0; i < d; i++)
                 {
-                    await Task.Delay(20);
+                    await Task.Delay(10);
                     ball.X += move_x;
                     ball.Y += move_y;
                 }
                 //nextDouble zwraca losową liczbę zmiennoprzecinkową
-                x_new = rand.Next(140, 630);
-                y_new = rand.Next(20, 310);
+                x_new = rand.Next(140, (int)limitX - 10);
+                y_new = rand.Next(20, (int)limitY - 10);
             }
         }
-
+        private double limitX;
+        private double limitY;
 
     }
-    //   }
 }

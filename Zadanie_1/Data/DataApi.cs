@@ -12,6 +12,6 @@ namespace Data
 
     internal class DataApi : DataAbstractApi
     {
-        //Nothing
+        //For future implemantation
     }
 }

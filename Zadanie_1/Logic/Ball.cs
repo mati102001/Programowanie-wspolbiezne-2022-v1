@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Logic
 {
-    public class Ball : INotifyPropertyChanged
+    internal class Ball : INotifyPropertyChanged
     {
         private double x;
         private double y;
