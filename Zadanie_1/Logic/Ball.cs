@@ -1,11 +1,29 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Logic
 {
-    public class Ball
+    public class Ball : INotifyPropertyChanged
     {
-       Vector2 location = new Vector2();
-       Vector2 velocity = new Vector2();
+        public event PropertyChangedEventHandler
+           PropertyChanged;
+
+        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public  float X { get; set; }
+        public  float Y { get; set; }
+
+        public Ball(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+
+       
     }
 }
