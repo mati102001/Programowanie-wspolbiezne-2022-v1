@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,9 @@ namespace Logic
 {
     internal class BallFactory : LogicAPI
     {
+        private readonly DataAbstractApi _data;
+        public BallFactory() : this(DataAbstractApi.CreateDataLayer()) { }
+        public BallFactory(DataAbstractApi data) { _data = data; }
         Random rand = new Random();
         private List<Task> tasks = new List<Task>();
         private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
@@ -87,6 +91,7 @@ namespace Logic
                 y_new = rand.Next(20, (int)limitY - 10);
             }
         }
+
         private double limitX;
         private double limitY;
 
