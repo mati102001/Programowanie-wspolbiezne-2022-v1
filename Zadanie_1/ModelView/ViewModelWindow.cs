@@ -19,11 +19,13 @@ namespace ModelView
             {
             _model = Model.CreateApi();
             Start = new RelayCommand(StartAction);
+
              }
 
         private void StartAction(object obj)
         {
             Balls = _model.Balls(_ballNumber);
+            _model.Start(Balls);
         }
 
         public int BallNumber

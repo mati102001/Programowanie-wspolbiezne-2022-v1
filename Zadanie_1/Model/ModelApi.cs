@@ -12,7 +12,7 @@ namespace ModelPresentation
 
         public override IList Balls(int ballNumber)
            => _logic.CreateBalls(ballNumber, 625, 300);
-
+         public override void Start(IList balls) => _logic.Start();
         public ModelApi() : this(LogicAPI.CreateBallAPI()) { }
         public ModelApi(LogicAPI logic) {
             _logic = logic; }
