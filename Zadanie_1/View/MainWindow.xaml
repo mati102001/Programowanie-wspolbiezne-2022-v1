@@ -44,7 +44,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Canvas>
-                        <Ellipse Stroke="Black" Fill="Red" Width="10" Height="10" Canvas.Left="{Binding BallX}" Canvas.Top="{Binding BallY}"/>
+                        <Ellipse Stroke="Black" Fill="Red" Width="10" Height="10" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}"/>
                     </Canvas>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
