@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Data;
 
-namespace Data
+namespace DataTest
 {
     [TestClass]
     public class DataTest
