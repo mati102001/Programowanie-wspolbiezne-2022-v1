@@ -25,7 +25,8 @@
             Height="50" Width="100"
             Canvas.Left="190" Canvas.Top="350"
             HorizontalAlignment="Center" 
-            Margin="0 340 300 0"/>
+            Margin="0 340 300 0"
+            Command="{Binding Stop}"/>
 
         <Button
             Content="Start"
@@ -33,8 +34,18 @@
             Height="50" Width="100"
             Canvas.Left="490" Canvas.Top="350"
             HorizontalAlignment="Center"
-            Margin="300 340 0 0" />
-        
+            Margin="300 340 0 0" 
+            Command="{Binding Start}"/>
+
+        <Button
+            Content="Create Balls"
+            VerticalAlignment="Center"         
+            Height="50" Width="100"
+            Canvas.Left="490" Canvas.Top="350"
+            HorizontalAlignment="Center"
+            Margin="0 340 550 0" 
+            Command="{Binding CreateBalls}"/>
+
     </Grid>
     
 </Window>
