@@ -29,6 +29,9 @@ namespace Model
             rectangle = new Rectangle {Width=width, Height=height, Stroke = Brushes.Black, StrokeThickness = 1 };
             r = new Random();
         }
+
+
+
         public void CreateBall()
         {
             logicAPI.Add();
@@ -36,9 +39,6 @@ namespace Model
             double radius = logicAPI.GetBallRadius(logicAPI.Get(ballNumer));
             double x = logicAPI.GetX(ballNumer);
             double y = logicAPI.GetY(ballNumer);
-            //double radius = 20;
-            //double x = r.Next(0, 450);
-            //double y = r.Next(0, 300);
             Ellipse newEllipse = new Ellipse { Width = radius * 2, Height = radius * 2, Fill = Brushes.Red, StrokeThickness = 2, Stroke = Brushes.Black };
             ellipses.Add(newEllipse);
 
@@ -50,6 +50,7 @@ namespace Model
 
         public void CreateBalls()
         {
+
             for (int i = 0; i < startBalls; i++)
                 CreateBall();
         }
