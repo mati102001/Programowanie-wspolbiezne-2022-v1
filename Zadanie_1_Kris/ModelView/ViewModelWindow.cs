@@ -34,7 +34,8 @@ namespace ModelView
         {
             get { return _ballNumber; }
             set
-            {
+            {   if (value.Equals(_ballNumber))
+                    return;
                 if (value < 0)
                     value = 0;
                 if (value > 200)

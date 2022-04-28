@@ -50,7 +50,7 @@ namespace Logic
             }
             public override void Add()
             {
-                int rad = 20;
+                int rad = 15;
                 double x = r.Next(0, boardWidth - 2 * rad);
                 double y = r.Next(0, boardHeight - 2 * rad);
          
