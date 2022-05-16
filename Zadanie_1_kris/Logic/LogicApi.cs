@@ -8,7 +8,7 @@ namespace Logic
     public abstract class LogicAPI
     {
         public static LogicAPI CreateBallAPI() => new BallFactory();
-        public abstract IList CreateBalls(int number, double XLimit, double YLimit);
+        public abstract IList CreateBalls(int number);
         public abstract void Start();
     }
 }

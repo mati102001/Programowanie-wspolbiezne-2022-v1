@@ -21,7 +21,7 @@ namespace LogicTest
         public void Create_IList()
         {
             api = LogicAPI.CreateBallAPI();
-            list = api.CreateBalls(10, 450, 500);
+            list = api.CreateBalls(10);
             Assert.IsNotNull(list);
             Assert.AreEqual(10, list.Count);
         }

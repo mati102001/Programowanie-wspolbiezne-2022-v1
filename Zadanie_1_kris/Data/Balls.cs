@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Ball : INotifyPropertyChanged
+    internal class Balls : INotifyPropertyChanged
     {
-        private double x;
-        private double y;
+        public double x { get; set; }
+        public double y { get; set; }
         private int Id;
         private double xSpeed;
         private double ySpeed;
         private double weight;
-        private double radius;
+        public double radius {get;}
 
         public event PropertyChangedEventHandler
            PropertyChanged;
@@ -26,7 +26,7 @@ namespace Data
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public Ball(int Id, double x, double y, double radius, double xSpeed, double ySpeed, double weight)
+        public Balls(int Id, double x, double y, double radius, double xSpeed, double ySpeed, double weight)
         {
             this.x = x;
             this.y = y;
@@ -74,9 +74,9 @@ namespace Data
             Y += ySpeed * interval;
         }
 
-        public void CreateMovementTask(int interval, CancellationToken cancellationToken)
+        public Task CreateMovementTask(int interval, CancellationToken cancellationToken)
         {
-            task = Run(interval, cancellationToken);
+            return Run(interval, cancellationToken);
         }
 
         private async Task Run(int interval, CancellationToken cancellationToken)
@@ -97,6 +97,5 @@ namespace Data
         }
 
         private readonly Stopwatch stopwatch = new Stopwatch();
-        private Task task;
     }
 }

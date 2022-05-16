@@ -16,25 +16,15 @@ namespace Logic
         public BallFactory(DataAbstractApi data) { _data = data; }
         Random rand = new Random();
         private List<Task> tasks = new List<Task>();
-        private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
+        private IList balls;
 
-        public override IList CreateBalls(int number, double XLimit, double YLimit)
+        public override IList CreateBalls(int number)
         {
-            balls.Clear();
             tasks.Clear();
-            double x;
-            double y;
-            limitX = XLimit;
-            limitY = YLimit;
-            for (int i = 0; i < number; i++)
-            {
-                x = rand.Next(140, (int) limitX-10);
-                y = rand.Next(20, (int) limitY-10);
-                balls.Add(new Ball(x, y));
-            }
-            return balls;
+            _data.createBoard(number);
+            balls = _data.GetAll();
+            return _data.GetAll();
         }
-        public ObservableCollection<Ball> Balls => balls;
 
         public int Tasks
         {
@@ -42,19 +32,16 @@ namespace Logic
         }
         public override void Start()
         {
-            double x;
-            double y;
             for (var i = 0; i < balls.Count; i++)
             {
-                Ball ball = balls[i];
                 //wstrzymanie glownego watku
                 Thread.Sleep(6);
                 //kolejkuje określoną pracę do uruchomienia w puli wątków
-                tasks.Add(Task.Run(() => Update(ball)));
+                tasks.Add(Task.Run(() => Update(i-1)));
             }
         }
 
-        public async void Update(Ball ball)
+        public async void Update(int b)
         {
             double x_new;
             double y_new;
@@ -65,14 +52,14 @@ namespace Logic
             double diffrence_y;
             double diffrence_x2;
             double diffrence_y2;
-            x_new = rand.Next(140, (int) limitX -10);
-            y_new = rand.Next(20, (int) limitY -10); 
+            x_new = rand.Next(140, _data.BoardWidth -10);
+            y_new = rand.Next(20, _data.BoardHeight -10); 
             while (true)
             {
-                diffrence_x = ball.X - x_new;
-                diffrence_y = ball.Y - y_new;
-                diffrence_x2 = x_new - ball.X;
-                diffrence_y2 = y_new - ball.Y;
+                diffrence_x = _data.getBallX(b) - x_new;
+                diffrence_y = _data.getBallY(b) - y_new;
+                diffrence_x2 = x_new - _data.getBallX(b);
+                diffrence_y2 = y_new - _data.getBallX(b);
                 diffrence_x = Math.Abs(diffrence_x);
                 diffrence_y = Math.Abs(diffrence_y);
                 //d = sqrt((x1-x2)^2+(y1-y2)^2)
@@ -83,17 +70,14 @@ namespace Logic
                 for (int i = 0; i < d; i++)
                 {
                     await Task.Delay(10);
-                    ball.X += move_x;
-                    ball.Y += move_y;
+                    _data.setBallX(b, _data.getBallX(b) + move_x);
+                    _data.setBallY(b, _data.getBallY(b) + move_y);
                 }
                 //nextDouble zwraca losową liczbę zmiennoprzecinkową
-                x_new = rand.Next(140, (int)limitX - 10);
-                y_new = rand.Next(20, (int)limitY - 10);
+                x_new = rand.Next(140, _data.BoardWidth - 10);
+                y_new = rand.Next(20, _data.BoardHeight - 10);
             }
         }
-
-        private double limitX;
-        private double limitY;
 
     }
 }
