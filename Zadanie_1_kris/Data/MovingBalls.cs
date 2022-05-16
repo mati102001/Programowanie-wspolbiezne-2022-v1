@@ -1,0 +1,102 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Data
+{
+    internal class Ball : INotifyPropertyChanged
+    {
+        private double x;
+        private double y;
+        private int Id;
+        private double xSpeed;
+        private double ySpeed;
+        private double weight;
+        private double radius;
+
+        public event PropertyChangedEventHandler
+           PropertyChanged;
+
+        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public Ball(int Id, double x, double y, double radius, double xSpeed, double ySpeed, double weight)
+        {
+            this.x = x;
+            this.y = y;
+            this.Id = Id;
+            this.xSpeed = xSpeed;
+            this.ySpeed = ySpeed;
+            this.weight = weight;
+            this.radius = radius;
+        }
+        public double X
+        {
+            get => x;
+            set
+            {
+                if (value.Equals(x)) return;
+                x = value;
+                OnPropertyChanged(nameof(X));
+            }
+        }
+        public double Y
+        {
+            get => y;
+            set
+            {
+                if (value.Equals(y)) return;
+                y = value;
+                OnPropertyChanged(nameof(Y));
+            }
+        }
+        public double R
+        {
+            get => radius;
+            set
+            {
+                if (value.Equals(radius)) return;
+                y = value;
+                OnPropertyChanged(nameof(R));
+
+            }
+        }
+
+        public void Move(double interval)
+        {
+            X += xSpeed * interval;
+            Y += ySpeed * interval;
+        }
+
+        public void CreateMovementTask(int interval, CancellationToken cancellationToken)
+        {
+            task = Run(interval, cancellationToken);
+        }
+
+        private async Task Run(int interval, CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                stopwatch.Reset();
+                stopwatch.Start();
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    Move(interval);
+                    OnPropertyChanged();
+                }
+                stopwatch.Stop();
+
+                await Task.Delay((int)(interval - stopwatch.ElapsedMilliseconds), cancellationToken);
+            }
+        }
+
+        private readonly Stopwatch stopwatch = new Stopwatch();
+        private Task task;
+    }
+}
