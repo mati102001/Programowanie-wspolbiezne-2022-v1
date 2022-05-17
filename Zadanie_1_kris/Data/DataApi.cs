@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace Data
 {
@@ -31,14 +32,19 @@ namespace Data
         {
             return new Board();
         }
+
+        public abstract void Test(int number);
     }
 
     
 
     internal class Board : DataAbstractApi
     {
+      
         private ObservableCollection<Balls> balls = new ObservableCollection<Balls>();
         Random rand = new Random();
+        private CancellationTokenSource cancellationTokenSource;
+        private CancellationToken cancellationToken;
 
         internal Board()
         {
@@ -98,6 +104,11 @@ namespace Data
         public override void setBallY(int i, double y)
         {
             balls[i].y = y;
+        }
+
+        public override void Test(int number)
+        {
+            balls[number].CreateMovementTask(1, cancellationToken);
         }
     }
 }

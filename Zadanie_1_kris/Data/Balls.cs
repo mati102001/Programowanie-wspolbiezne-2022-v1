@@ -9,18 +9,23 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Balls : INotifyPropertyChanged
+    public class Balls : INotifyPropertyChanged
     {
         public double x { get; set; }
+
         public double y { get; set; }
+
         private int Id;
+
         private double xSpeed;
+
         private double ySpeed;
+
         private double weight;
+
         public double radius {get;}
 
-        public event PropertyChangedEventHandler
-           PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
