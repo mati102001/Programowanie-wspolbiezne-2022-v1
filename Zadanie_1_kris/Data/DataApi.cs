@@ -108,7 +108,8 @@ namespace Data
 
         public override void Test(int number)
         {
-            balls[number].CreateMovementTask(1, cancellationToken);
+  
+            balls[number].CreateMovementTask(30, cancellationToken);
         }
     }
 }

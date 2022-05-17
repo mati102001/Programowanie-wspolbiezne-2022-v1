@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class Balls : INotifyPropertyChanged
+    internal class Balls : INotifyPropertyChanged
     {
         public double x { get; set; }
 
         public double y { get; set; }
 
-        private int Id;
+        private int Id { get; }
 
-        private double xSpeed;
+        private double xSpeed { get; }
 
-        private double ySpeed;
+        private double ySpeed { get; }
 
-        private double weight;
+        private double weight { get; }
 
-        public double radius {get;}
+        public double radius {get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -33,13 +33,13 @@ namespace Data
         }
         public Balls(int Id, double x, double y, double radius, double xSpeed, double ySpeed, double weight)
         {
+            this.Id = Id;
             this.x = x;
             this.y = y;
-            this.Id = Id;
+            this.radius = radius;
             this.xSpeed = xSpeed;
             this.ySpeed = ySpeed;
             this.weight = weight;
-            this.radius = radius;
         }
         public double X
         {
