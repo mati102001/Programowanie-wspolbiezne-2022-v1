@@ -16,18 +16,20 @@ namespace Data
 
         public abstract int Count();
 
-        public abstract double getBallX(int i);
+        //public abstract double getBallX(int i);
 
-        public abstract double getBallY(int i);
+        //public abstract double getBallY(int i);
 
-        public abstract double getBallR(int i);
+        //public abstract double getBallR(int i);
 
-        public abstract void setBallX(int i, double x);
+        //public abstract void setBallX(int i, double x);
 
-        public abstract void setBallY(int i, double y);
+        //public abstract void setBallY(int i, double y);
 
-        public abstract void createBoard(int number);
-        
+        public abstract void createBalls(int number);
+
+        public abstract IBall GetBall(int i);
+
         public static DataAbstractApi CreateDataLayer()
         {
             return new Board();
@@ -41,7 +43,7 @@ namespace Data
     internal class Board : DataAbstractApi
     {
       
-        private ObservableCollection<Balls> balls = new ObservableCollection<Balls>();
+        private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
         Random rand = new Random();
         private CancellationTokenSource cancellationTokenSource;
         private CancellationToken cancellationToken;
@@ -57,7 +59,7 @@ namespace Data
             return balls.Count;
         }
 
-        public override void createBoard(int number)
+        public override void createBalls(int number)
         {
             balls.Clear();
             double x;
@@ -68,48 +70,28 @@ namespace Data
             {
                 x = rand.Next(140, BoardWidth - 10);
                 y = rand.Next(20, BoardHeight - 10);
-                xSpeed = rand.Next(1, 10);
-                ySpeed = rand.Next(1, 10);
-                balls.Add(new Balls(i, x, y, 10, xSpeed, ySpeed, 50));
+                xSpeed = rand.NextDouble();
+                ySpeed = rand.NextDouble();
+                balls.Add(new Ball(x, y, 10, xSpeed, ySpeed, 50));
             }
         }
 
-        public ObservableCollection<Balls> Balls => balls;
+        public ObservableCollection<Ball> Balls => balls;
 
         public override IList GetAll()
         {
             return balls;
         }
 
-        public override double getBallX(int i)
+        public override IBall GetBall(int index)
         {
-            return balls[i].x;
-        }
-
-        public override double getBallY(int i)
-        {
-            return balls[i].y;
-        }
-
-        public override double getBallR(int i)
-        {
-            return balls[i].radius;
-        }
-
-        public override void setBallX(int i, double x)
-        {
-            balls[i].x = x;
-        }
-
-        public override void setBallY(int i, double y)
-        {
-            balls[i].y = y;
+            return balls[index];
         }
 
         public override void Test(int number)
         {
   
-            balls[number].CreateMovementTask(30, cancellationToken);
+            balls[number].CreateMovementTask(10, cancellationToken);
         }
     }
 }

@@ -9,21 +9,34 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Balls : INotifyPropertyChanged
+    public interface IBall : INotifyPropertyChanged
     {
-        public double x { get; set; }
+        double Radius { get; }
+        double Weight { get; }
 
-        public double y { get; set; }
+        double X { get; set; }
+        double Y { get; set; }
+        double XSpeed { get; set; }
+        double YSpeed { get; set; }
 
-        private int Id { get; }
+        void Move(double interval);
+        Task CreateMovementTask(int interval, CancellationToken cancellationToken);
 
-        private double xSpeed { get; }
+    }
 
-        private double ySpeed { get; }
+    internal class Ball : IBall
+    {
+        private double x;
 
-        private double weight { get; }
+        private double y;
 
-        public double radius {get; }
+        private double xSpeed;
+
+        private double ySpeed;
+
+        private double weight;
+
+        public double radius;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -31,9 +44,8 @@ namespace Data
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public Balls(int Id, double x, double y, double radius, double xSpeed, double ySpeed, double weight)
+        public Ball(double x, double y, double radius, double xSpeed, double ySpeed, double weight)
         {
-            this.Id = Id;
             this.x = x;
             this.y = y;
             this.radius = radius;
@@ -41,6 +53,7 @@ namespace Data
             this.ySpeed = ySpeed;
             this.weight = weight;
         }
+        
         public double X
         {
             get => x;
@@ -72,6 +85,28 @@ namespace Data
 
             }
         }
+
+        public double Radius { get => radius; }
+
+        public double Weight { get => weight; }
+
+        public double XSpeed { get => xSpeed; set {
+                if (value.Equals(xSpeed))
+                {
+                    return;
+                }
+
+                xSpeed = value;
+            } 
+        }
+        public double YSpeed { get => ySpeed; set {
+                if (value.Equals(ySpeed))
+                {
+                    return;
+                }
+
+                ySpeed = value;
+            }  }
 
         public void Move(double interval)
         {
