@@ -20,6 +20,8 @@ namespace ModelView
         {
             _model = Model.CreateApi();
             Start = new RelayCommand(StartAction);
+            _boardHeight = _model.BoardHeight;
+            _boardWidth = _model.BoardWidth;
         }
 
         private void StartAction(object obj)
@@ -68,7 +70,7 @@ namespace ModelView
             set
             {
                 if (value.Equals(_boardHeight)) return;
-                _boardHeight = _model.BoardHeight;
+                _boardHeight = value;
                 OnPropertyChanged();
 
             }
@@ -79,7 +81,7 @@ namespace ModelView
             set
             {
                 if (value.Equals(_boardWidth)) return;
-                _boardWidth = _model.BoardWidth;
+                _boardWidth = value;
                 OnPropertyChanged();
 
             }
