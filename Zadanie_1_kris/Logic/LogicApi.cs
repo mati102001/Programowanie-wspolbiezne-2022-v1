@@ -48,8 +48,9 @@ namespace Logic
         }
 
         public override void Start()
-        {
-           
+        { 
+            for (int i = 0; i < balls.Count; i++)
+                _data.GetBall(i).CreateMovementTask(30, cancellationToken);
         }
 
         public void WallCollision(IBall ball)
@@ -134,13 +135,6 @@ namespace Logic
 
         }
 
-
-        public override void Stop()
-        {
-            
-            for (int i = 0; i < balls.Count; i++)
-                _data.GetBall(i).CreateMovementTask(30, cancellationToken);
-        }
 
         internal bool Collision(IBall a, IBall b)
         {

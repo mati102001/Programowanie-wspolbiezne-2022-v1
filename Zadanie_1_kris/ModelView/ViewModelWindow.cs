@@ -17,19 +17,26 @@ namespace ModelView
             private double _boardHeight;
         public ViewModelWindow()
             {
-                _model = Model.CreateApi();
-                Start = new RelayCommand(StartAction);
-                Stop = new RelayCommand(StopAction);
-             }
+            _model = Model.CreateApi();
+            Start = new RelayCommand(StartAction);
+        }
 
         private void StartAction(object obj)
         {
             Balls = _model.Balls(_ballNumber);
+            _model.Start(Balls);
+            BallNumber = 0;
+            IsStartEnable = false;
         }
 
-        private void StopAction(object obj)
+        public bool IsStartEnable
         {
-            _model.Stop();
+            get => _isStartEnable;
+            set
+            {
+                _isStartEnable = value;
+                OnPropertyChanged(nameof(IsStartEnable));
+            }
         }
 
         public int BallNumber
@@ -37,6 +44,8 @@ namespace ModelView
                 get => _ballNumber;
                 set
                 {
+                    if (value > 0)
+                        IsStartEnable = true;
                     if (value.Equals(_ballNumber))
                         return;
                     if (value < 0)
@@ -44,21 +53,12 @@ namespace ModelView
                     if (value > 2000)
                         value = 2000;
                     _ballNumber = value;
-                    OnPropertyChanged(nameof(BallNumber));
+                OnPropertyChanged(nameof(BallNumber));
                 }
             }
 
         public ICommand Start { get; set; }
 
-        public ICommand Stop { get; set; }
-        public  double BoardWidth
-        {
-            get => _boardWidth;
-            set
-            {
-                if (value.Equals(_boardWidth)) return;
-                _boardWidth = _model.BoardWidth;
-                OnPropertyChanged();
 
             }
         }

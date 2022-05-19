@@ -21,23 +21,17 @@
             TextWrapping="Wrap"
             VerticalAlignment="Center"
             Height="50" Width="156"
-            Canvas.Left="312" Canvas.Top="350" HorizontalAlignment="Left" />
+            Canvas.Left="193" Canvas.Top="350" HorizontalAlignment="Left" />
 
         <Button
             Content="Start"
-            VerticalAlignment="Center"         
+            VerticalAlignment="Center" 
+            FontSize="20"
             Height="50" Width="193"
-            Canvas.Left="515" Canvas.Top="350"
+            Canvas.Left="439" Canvas.Top="350"
             HorizontalAlignment="Left" 
-            Command="{Binding Start}"/>
-
-        <Button
-            Content="Create"
-            VerticalAlignment="Center"         
-            Height="50" Width="193"
-            Canvas.Left="67" Canvas.Top="350"
-            HorizontalAlignment="Left" 
-            Command="{Binding Stop}"/>
+            Command="{Binding Start}"
+            IsEnabled="{Binding IsStartEnable}"/>
 
 
         <Rectangle
