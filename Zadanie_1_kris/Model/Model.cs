@@ -11,6 +11,5 @@ namespace ModelAPI
             return new ModelApi();
         }
         public abstract void Start(IList balls);
-        public abstract void Stop();
     }
 }

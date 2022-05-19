@@ -11,7 +11,6 @@ namespace Logic
         public static LogicAPI CreateBallAPI() => new BallFactory();
         public abstract IList CreateBalls(int number);
         public abstract void Start();
-        public abstract void Stop();
     }
 
     internal class BallFactory : LogicAPI
@@ -40,8 +39,9 @@ namespace Logic
         }
 
         public override void Start()
-        {
-           
+        { 
+            for (int i = 0; i < balls.Count; i++)
+                _data.GetBall(i).CreateMovementTask(30, cancellationToken);
         }
 
         public void WallCollision(IBall ball)
@@ -126,13 +126,6 @@ namespace Logic
 
         }
 
-
-        public override void Stop()
-        {
-            
-            for (int i = 0; i < balls.Count; i++)
-                _data.GetBall(i).CreateMovementTask(30, cancellationToken);
-        }
 
         internal bool Collision(IBall a, IBall b)
         {
