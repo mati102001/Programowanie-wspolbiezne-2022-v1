@@ -17,12 +17,17 @@ namespace ModelView
             {
             _model = Model.CreateApi();
             Start = new RelayCommand(StartAction);
-             }
+            Stop = new RelayCommand(StopAction);
+        }
 
         private void StartAction(object obj)
         {
             Balls = _model.Balls(_ballNumber);
-            _model.Start(Balls);
+        }
+
+        private void StopAction(object obj)
+        {
+            _model.Stop();
         }
 
         public int BallNumber
@@ -42,7 +47,9 @@ namespace ModelView
             }
 
         public ICommand Start { get; set; }
-       
+
+        public ICommand Stop { get; set; }
+
         public IList Balls
             {
                 get => _balls;

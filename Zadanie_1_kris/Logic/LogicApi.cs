@@ -11,6 +11,7 @@ namespace Logic
         public static LogicAPI CreateBallAPI() => new BallFactory();
         public abstract IList CreateBalls(int number);
         public abstract void Start();
+        public abstract void Stop();
     }
 
     internal class BallFactory : LogicAPI
@@ -31,21 +32,19 @@ namespace Logic
         public override IList CreateBalls(int number)
         { 
             _data.createBalls (number);
+            IList ballsTemp = _data.GetAll();
             for (int i = 0; i < _data.Count(); i++) {
                 _data.GetBall(i).PropertyChanged += PositionChange;
             }
-            return _data.GetAll();
+            return ballsTemp;
         }
 
         public override void Start()
         {
-            cancellationTokenSource = new CancellationTokenSource();
-            cancellationToken = cancellationTokenSource.Token;
-            for (int i = 0; i < balls.Count; i++)
-                _data.GetBall(i).CreateMovementTask(30, cancellationToken);
+           
         }
 
-        internal void WallCollision(IBall ball)
+        public void WallCollision(IBall ball)
         {
 
             double diameter = ball.Radius;
@@ -55,9 +54,9 @@ namespace Logic
             double down = _data.BoardHeight - diameter;
 
 
-            if (ball.X <= 140)
+            if (ball.X <= 0)
             {
-                ball.X = -ball.X;
+                ball.X = - ball.X;
                 ball.XSpeed = -ball.XSpeed;
             }
 
@@ -66,9 +65,9 @@ namespace Logic
                 ball.X = right - (ball.X - right);
                 ball.XSpeed = -ball.XSpeed;
             }
-            if (ball.Y <= 20)
+            if (ball.Y <= 0)
             {
-                ball.Y = -ball.Y;
+                ball.Y =  -ball.Y;
                 ball.YSpeed = -ball.YSpeed;
             }
 
@@ -79,7 +78,7 @@ namespace Logic
             }
         }
 
-        internal void BallBounce(IBall ball)
+        public void BallBounce(IBall ball)
         {
             for (int i = 0; i < _data.Count(); i++)
             {
@@ -99,18 +98,24 @@ namespace Logic
                     double v2x = secondBall.XSpeed;
                     double v2y = secondBall.YSpeed;
 
+                    if (Math.Abs(m1 - m2) < 0.1)
+                    {
+                        (ball.XSpeed, secondBall.XSpeed) = (secondBall.XSpeed, ball.XSpeed);
+                        (ball.YSpeed, secondBall.YSpeed) = (secondBall.YSpeed, ball.YSpeed);
+                    }
+                    else
+                    {
+                        double u1x = (m1 - m2) * v1x / (m1 + m2) + (2 * m2) * v2x / (m1 + m2);
+                        double u1y = (m1 - m2) * v1y / (m1 + m2) + (2 * m2) * v2y / (m1 + m2);
 
+                        double u2x = 2 * m1 * v1x / (m1 + m2) + (m2 - m1) * v2x / (m1 + m2);
+                        double u2y = 2 * m1 * v1y / (m1 + m2) + (m2 - m1) * v2y / (m1 + m2);
 
-                    double u1x = (m1 - m2) * v1x / (m1 + m2) + (2 * m2) * v2x / (m1 + m2);
-                    double u1y = (m1 - m2) * v1y / (m1 + m2) + (2 * m2) * v2y / (m1 + m2);
-
-                    double u2x = 2 * m1 * v1x / (m1 + m2) + (m2 - m1) * v2x / (m1 + m2);
-                    double u2y = 2 * m1 * v1y / (m1 + m2) + (m2 - m1) * v2y / (m1 + m2);
-
-                    ball.XSpeed = u1x;
-                    ball.YSpeed = u1y;
-                    secondBall.XSpeed = u2x;
-                    secondBall.YSpeed = u2y;
+                        ball.XSpeed = u1x;
+                        ball.YSpeed = u1y;
+                        secondBall.XSpeed = u2x;
+                        secondBall.YSpeed = u2y;
+                    }
                     return;
 
                 }
@@ -122,7 +127,12 @@ namespace Logic
         }
 
 
-
+        public override void Stop()
+        {
+            
+            for (int i = 0; i < balls.Count; i++)
+                _data.GetBall(i).CreateMovementTask(30, cancellationToken);
+        }
 
         internal bool Collision(IBall a, IBall b)
         {
@@ -147,10 +157,15 @@ namespace Logic
         public void PositionChange(object sender, PropertyChangedEventArgs args)
         {
             IBall ball = (IBall)sender;
-            
+            mutex.WaitOne();
+            if (ball == null)
+            {
+                mutex.ReleaseMutex();
+                return;
+            }
             WallCollision(ball);
             BallBounce(ball);
-            
+            mutex.ReleaseMutex();
         }
 
     }

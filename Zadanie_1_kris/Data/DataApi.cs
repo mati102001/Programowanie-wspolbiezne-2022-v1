@@ -16,16 +16,6 @@ namespace Data
 
         public abstract int Count();
 
-        //public abstract double getBallX(int i);
-
-        //public abstract double getBallY(int i);
-
-        //public abstract double getBallR(int i);
-
-        //public abstract void setBallX(int i, double x);
-
-        //public abstract void setBallY(int i, double y);
-
         public abstract void createBalls(int number);
 
         public abstract IBall GetBall(int i);
@@ -34,8 +24,6 @@ namespace Data
         {
             return new Board();
         }
-
-        public abstract void Test(int number);
     }
 
     
@@ -70,8 +58,8 @@ namespace Data
             {
                 x = rand.Next(140, BoardWidth - 10);
                 y = rand.Next(20, BoardHeight - 10);
-                xSpeed = rand.NextDouble();
-                ySpeed = rand.NextDouble();
+                xSpeed = rand.Next(1,5);
+                ySpeed = rand.Next(1,5);
                 balls.Add(new Ball(x, y, 10, xSpeed, ySpeed, 50));
             }
         }
@@ -88,10 +76,5 @@ namespace Data
             return balls[index];
         }
 
-        public override void Test(int number)
-        {
-  
-            balls[number].CreateMovementTask(10, cancellationToken);
-        }
     }
 }

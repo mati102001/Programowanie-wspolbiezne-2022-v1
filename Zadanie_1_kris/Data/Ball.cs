@@ -110,8 +110,8 @@ namespace Data
 
         public void Move(double interval)
         {
-            X += xSpeed * interval;
-            Y += ySpeed * interval;
+            X += xSpeed ;
+            Y += ySpeed ;
         }
 
         public Task CreateMovementTask(int interval, CancellationToken cancellationToken)
@@ -121,14 +121,16 @@ namespace Data
 
         private async Task Run(int interval, CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            int test = 0;
+            while (test<5000)
             {
                 stopwatch.Reset();
                 stopwatch.Start();
                 if (!cancellationToken.IsCancellationRequested)
                 {
                     Move(interval);
-                    OnPropertyChanged();
+                 
+                    test += 1;
                 }
                 stopwatch.Stop();
 
