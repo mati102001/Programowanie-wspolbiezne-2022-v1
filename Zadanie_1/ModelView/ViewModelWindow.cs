@@ -51,8 +51,11 @@ namespace ModelView
                     IsStartEnable = true;
                 if (value.Equals(_ballNumber))
                     return;
-                if (value < 0)
+                if (value <= 0)
+                {
                     value = 0;
+                    IsStartEnable = false;
+                }
                 if (value > 2000)
                     value = 2000;
                 _ballNumber = value;

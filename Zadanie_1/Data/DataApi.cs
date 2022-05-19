@@ -33,6 +33,7 @@ namespace Data
     internal class Board : DataAbstractApi
     {
         private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
+
         Random rand = new Random();
 
         public event PropertyChangedEventHandler PropertyChanged;

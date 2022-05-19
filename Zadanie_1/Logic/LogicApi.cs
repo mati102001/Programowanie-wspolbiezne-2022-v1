@@ -39,7 +39,7 @@ namespace Logic
         private CancellationToken cancellationToken;
 
         public override IList CreateBalls(int number)
-        { 
+        {
             _data.createBalls (number);
             IList ballsTemp = _data.GetAll();
             for (int i = 0; i < _data.Count(); i++) {
@@ -49,7 +49,11 @@ namespace Logic
         }
 
         public override void Start()
-        { 
+        {
+            if(cancellationTokenSource != null)
+                cancellationTokenSource.Cancel();
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
             for (int i = 0; i < balls.Count; i++)
                 _data.GetBall(i).CreateMovementTask(10, cancellationToken);
         }
