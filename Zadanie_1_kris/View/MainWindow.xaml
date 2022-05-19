@@ -37,8 +37,8 @@
         <Rectangle
             Stroke="Black"
             StrokeThickness="1"
-            Canvas.Left="140" Canvas.Top="20"           
-            Height="{Binding BoardHeight}" Width="{Binding BoardWidth}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            Canvas.Left="80" Canvas.Top="10"           
+            Height="{Binding BoardHeight}" Width="{Binding BoardWidth}" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
         <ItemsControl Name="Balls" ItemsSource="{Binding Balls, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <ItemsControl.ItemTemplate>

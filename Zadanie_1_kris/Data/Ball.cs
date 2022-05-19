@@ -13,7 +13,6 @@ namespace Data
     {
         double R { get; set; }
         double Weight { get; }
-
         double X { get; set; }
         double Y { get; set; }
         double XSpeed { get; set; }

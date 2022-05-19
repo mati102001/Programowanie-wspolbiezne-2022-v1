@@ -30,7 +30,7 @@ namespace Logic
 
         private IList balls => _data.GetAll();
 
-        public override double BoardWidth => _data.BoardHeight;
+        public override double BoardWidth => _data.BoardWidth;
 
         public override double BoardHeight => _data.BoardHeight;
 
@@ -59,14 +59,14 @@ namespace Logic
 
             double diameter = ball.R;
 
-            double right = _data.BoardWidth - diameter;
+            double right = 80 + _data.BoardWidth - diameter;
 
-            double down = _data.BoardHeight - diameter;
+            double down = 10 + _data.BoardHeight - diameter;
 
 
-            if (ball.X <= 140)
+            if (ball.X <= 80)
             {
-                ball.X = 140; 
+                ball.X = 80; 
                 ball.XSpeed = -ball.XSpeed;
             }
 
@@ -75,9 +75,9 @@ namespace Logic
                 ball.X = right;
                 ball.XSpeed = -ball.XSpeed;
             }
-            if (ball.Y <= 20)
+            if (ball.Y <= 10)
             {
-                ball.Y =  20;
+                ball.Y =  10;
                 ball.YSpeed = -ball.YSpeed;
             }
 

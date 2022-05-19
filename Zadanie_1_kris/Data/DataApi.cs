@@ -10,9 +10,9 @@ namespace Data
 {
     public abstract class DataAbstractApi
     {
-        public abstract double BoardWidth { get;}
+        public abstract double BoardWidth { get;  set; }
 
-        public abstract double BoardHeight { get;}
+        public abstract double BoardHeight { get;  set; }
 
         public abstract IList GetAll();
 
@@ -41,13 +41,13 @@ namespace Data
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private double boardWidth = 640;
-        private double boardHeight = 640;
+        private double boardWidth;
+        private double boardHeight;
 
         internal Board()
         {
-            boardWidth = 640;
-            boardHeight = 320;
+            BoardWidth = 640;
+            BoardHeight = 320;
         }
 
         public override int Count()
@@ -74,8 +74,20 @@ namespace Data
 
         public ObservableCollection<Ball> Balls => balls;
 
-        public override double BoardWidth { get => boardWidth;}
-        public override double BoardHeight { get => boardHeight;}
+        public override double BoardWidth
+        {
+            get => boardWidth; set
+            {
+                boardWidth = value;
+                OnPropertyChanged();
+            }
+        }
+        public override double BoardHeight { get => boardHeight; set
+            {
+                boardHeight = value;
+                OnPropertyChanged();
+            }
+        }
 
         public override IList GetAll()
         {
