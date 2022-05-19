@@ -12,6 +12,10 @@ namespace Logic
         public abstract IList CreateBalls(int number);
         public abstract void Start();
         public abstract void Stop();
+
+        public abstract double BoardWidth { get; }
+
+        public abstract double BoardHeight { get; }
     }
 
     internal class BallFactory : LogicAPI
@@ -24,6 +28,10 @@ namespace Logic
         public BallFactory(DataAbstractApi data) { _data = data; service = new BallService(_data); }
 
         private IList balls => _data.GetAll();
+
+        public override double BoardWidth => _data.BoardHeight;
+
+        public override double BoardHeight => _data.BoardHeight;
 
         private CancellationTokenSource cancellationTokenSource;
 

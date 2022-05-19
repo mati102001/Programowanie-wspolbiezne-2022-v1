@@ -102,9 +102,9 @@ namespace Data
                 {
                     return;
                 }
-
                 ySpeed = value;
-            }  }
+            }  
+        }
 
         public void Move(double interval)
         {

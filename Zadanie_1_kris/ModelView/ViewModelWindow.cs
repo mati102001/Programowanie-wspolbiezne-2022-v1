@@ -12,13 +12,15 @@ namespace ModelView
             private int _ballNumber;
             private readonly Model _model;
             private IList _balls;
-     
-            public ViewModelWindow()
+
+            private double _boardWidth;
+            private double _boardHeight;
+        public ViewModelWindow()
             {
-            _model = Model.CreateApi();
-            Start = new RelayCommand(StartAction);
-            Stop = new RelayCommand(StopAction);
-        }
+                _model = Model.CreateApi();
+                Start = new RelayCommand(StartAction);
+                Stop = new RelayCommand(StopAction);
+             }
 
         private void StartAction(object obj)
         {
@@ -49,7 +51,28 @@ namespace ModelView
         public ICommand Start { get; set; }
 
         public ICommand Stop { get; set; }
+        public  double BoardWidth
+        {
+            get => _boardWidth;
+            set
+            {
+                if (value.Equals(_boardWidth)) return;
+                _boardWidth = _model.BoardWidth;
+                OnPropertyChanged();
 
+            }
+        }
+        public double BoardHeight
+        {
+            get => _boardHeight;
+            set
+            {
+                if (value.Equals(_boardHeight)) return;
+                _boardHeight = _model.BoardHeight;
+                OnPropertyChanged();
+
+            }
+        }
         public IList Balls
             {
                 get => _balls;

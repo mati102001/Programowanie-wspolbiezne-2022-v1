@@ -10,9 +10,9 @@ namespace Data
 {
     public abstract class DataAbstractApi
     {
-        public abstract int BoardWidth { get; set; }
+        public abstract double BoardWidth { get;}
 
-        public abstract int BoardHeight { get; set; }
+        public abstract double BoardHeight { get;}
 
         public abstract IList GetAll();
 
@@ -34,14 +34,15 @@ namespace Data
     {
         private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
         Random rand = new Random();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private int boardWidth;
-        private int boardHeight;
+        private double boardWidth = 640;
+        private double boardHeight = 640;
 
         internal Board()
         {
@@ -63,8 +64,8 @@ namespace Data
             double ySpeed;
             for (int i = 0; i < number; i++)
             {
-                x = rand.Next(140, BoardWidth - 10);
-                y = rand.Next(20, BoardHeight - 10);
+                x = rand.Next(140, (int) BoardWidth - 10);
+                y = rand.Next(20, (int) BoardHeight - 10);
                 xSpeed = rand.Next(1,5);
                 ySpeed = rand.Next(1,5);
                 balls.Add(new Ball(x, y, 10, xSpeed, ySpeed, 50));
@@ -73,25 +74,8 @@ namespace Data
 
         public ObservableCollection<Ball> Balls => balls;
 
-        public override int BoardWidth {
-            get => boardWidth; set
-            {
-                if (value.Equals(BoardHeight)) return;
-                boardHeight = value;
-                OnPropertyChanged(nameof(BoardWidth));
-
-            }
-        }
-        public override int BoardHeight
-        {
-            get => boardHeight; set
-            {
-                if (value.Equals(BoardHeight)) return;
-                boardHeight = value;
-                OnPropertyChanged(nameof(BoardHeight));
-
-            }
-        }
+        public override double BoardWidth { get => boardWidth;}
+        public override double BoardHeight { get => boardHeight;}
 
         public override IList GetAll()
         {
