@@ -11,7 +11,6 @@ namespace ModelAPI
             return new ModelApi();
         }
         public abstract void Start(IList balls);
-        public abstract void Stop();
         public abstract double BoardWidth { get; }
         public abstract double BoardHeight { get; }
     }

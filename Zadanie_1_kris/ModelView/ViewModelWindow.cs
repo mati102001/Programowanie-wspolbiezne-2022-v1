@@ -7,16 +7,17 @@ using System.Windows.Input;
 
 namespace ModelView
 {
-        public class ViewModelWindow : MainViewModel
-        {
-            private int _ballNumber;
-            private readonly Model _model;
-            private IList _balls;
+    public class ViewModelWindow : MainViewModel
+    {
+        private int _ballNumber;
+        private readonly Model _model;
+        private IList _balls;
+        private bool _isStartEnable = false;
+        private double _boardWidth;
+        private double _boardHeight;
 
-            private double _boardWidth;
-            private double _boardHeight;
         public ViewModelWindow()
-            {
+        {
             _model = Model.CreateApi();
             Start = new RelayCommand(StartAction);
         }
@@ -40,28 +41,27 @@ namespace ModelView
         }
 
         public int BallNumber
+        {
+            get => _ballNumber;
+            set
             {
-                get => _ballNumber;
-                set
-                {
-                    if (value > 0)
-                        IsStartEnable = true;
-                    if (value.Equals(_ballNumber))
-                        return;
-                    if (value < 0)
-                        value = 0;
-                    if (value > 2000)
-                        value = 2000;
-                    _ballNumber = value;
+                if (value > 0)
+                    IsStartEnable = true;
+                if (value.Equals(_ballNumber))
+                    return;
+                if (value < 0)
+                    value = 0;
+                if (value > 2000)
+                    value = 2000;
+                _ballNumber = value;
                 OnPropertyChanged(nameof(BallNumber));
-                }
             }
+        }
 
         public ICommand Start { get; set; }
 
 
-            }
-        }
+
         public double BoardHeight
         {
             get => _boardHeight;
@@ -73,16 +73,28 @@ namespace ModelView
 
             }
         }
-        public IList Balls
+        public double BoardWidth
+        {
+            get => _boardWidth;
+            set
             {
-                get => _balls;
-                set
-                {
-                    if (value.Equals(_balls))
-                        return;
-                    _balls = value;
-                    OnPropertyChanged(nameof(Balls));
-                }
+                if (value.Equals(_boardWidth)) return;
+                _boardWidth = _model.BoardWidth;
+                OnPropertyChanged();
+
             }
         }
+        public IList Balls
+        {
+            get => _balls;
+            set
+            {
+                if (value.Equals(_balls))
+                    return;
+                _balls = value;
+                OnPropertyChanged(nameof(Balls));
+            }
+        }
+
     }
+}

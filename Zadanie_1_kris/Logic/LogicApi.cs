@@ -9,9 +9,10 @@ namespace Logic
     public abstract class LogicAPI
     {
         public static LogicAPI CreateBallAPI() => new BallFactory();
+
         public abstract IList CreateBalls(int number);
+
         public abstract void Start();
-        public abstract void Stop();
 
         public abstract double BoardWidth { get; }
 
