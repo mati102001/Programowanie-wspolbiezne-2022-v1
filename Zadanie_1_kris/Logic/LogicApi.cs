@@ -108,7 +108,7 @@ namespace Logic
                     double v2x = secondBall.XSpeed;
                     double v2y = secondBall.YSpeed;
 
-                    if (Math.Abs(m1 - m2) < 0.1)
+                    if (Math.Abs(m1 - m2) == 0)
                     {
                         (ball.XSpeed, secondBall.XSpeed) = (secondBall.XSpeed, ball.XSpeed);
                         (ball.YSpeed, secondBall.YSpeed) = (secondBall.YSpeed, ball.YSpeed);
@@ -144,17 +144,17 @@ namespace Logic
                 return false;
             }
 
-            return Distance(a, b) <= (a.R + b.R );
+            return Distance(a, b) <= (a.R + b.R);
         }
 
         internal double Distance(IBall a, IBall b)
         {
-            double x1 = a.X + a.R  + a.XSpeed;
-            double y1 = a.Y + a.R  + a.YSpeed;
-            double x2 = b.X + b.R  + b.XSpeed;
-            double y2 = b.Y + b.R  + b.YSpeed;
+            double x1 = a.X + a.R ;
+            double y1 = a.Y + a.R ;
+            double x2 = b.X + b.R ;
+            double y2 = b.Y + b.R ;
 
-            return Math.Sqrt((Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2)));
+            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
         }
 
         public void PositionChange(object sender, PropertyChangedEventArgs args)

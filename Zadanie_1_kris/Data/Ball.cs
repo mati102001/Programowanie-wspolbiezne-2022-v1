@@ -106,7 +106,7 @@ namespace Data
             }  
         }
 
-        public void Move(double interval)
+        public void Move()
         {
             X += xSpeed ;
             Y += ySpeed ;
@@ -119,16 +119,14 @@ namespace Data
 
         private async Task Run(int interval, CancellationToken cancellationToken)
         {
-            int test = 0;
-            while (test<5000)
+            
+            while (!cancellationToken.IsCancellationRequested)
             {
                 stopwatch.Reset();
                 stopwatch.Start();
                 if (!cancellationToken.IsCancellationRequested)
                 {
-                    Move(interval);
-                 
-                    test += 1;
+                    Move();
                 }
                 stopwatch.Stop();
 
