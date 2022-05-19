@@ -10,9 +10,9 @@ namespace Data
 {
     public abstract class DataAbstractApi
     {
-        public abstract double BoardWidth { get;  set; }
+        public abstract double BoardWidth { get;  internal set; }
 
-        public abstract double BoardHeight { get;  set; }
+        public abstract double BoardHeight { get;  internal set; }
 
         public abstract IList GetAll();
 
@@ -77,13 +77,15 @@ namespace Data
 
         public override double BoardWidth
         {
-            get => boardWidth; set
+            get => boardWidth; 
+            internal set
             {
                 boardWidth = value;
                 OnPropertyChanged();
             }
         }
-        public override double BoardHeight { get => boardHeight; set
+        public override double BoardHeight { get => boardHeight; 
+            internal set
             {
                 boardHeight = value;
                 OnPropertyChanged();

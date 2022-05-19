@@ -19,10 +19,8 @@ namespace DataTest
         public void BoardWidthHeight()
         {
             api = DataAbstractApi.CreateDataLayer();
-            api.BoardWidth = 500;
-            api.BoardHeight = 400;
-            Assert.AreEqual(500, api.BoardWidth);
-            Assert.AreEqual(400, api.BoardHeight);
+            Assert.AreEqual(640, api.BoardWidth);
+            Assert.AreEqual(320, api.BoardHeight);
         }
 
         [TestMethod]
