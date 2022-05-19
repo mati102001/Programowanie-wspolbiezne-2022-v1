@@ -10,7 +10,7 @@
     <Window.DataContext>
         <vm:ViewModelWindow/>
     </Window.DataContext>
-        
+
     <Canvas>
         <TextBox
             TextAlignment="Center"
@@ -20,28 +20,31 @@
             Text= "{Binding BallNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             TextWrapping="Wrap"
             VerticalAlignment="Center"
-            Height="50" Width="155"
-            Canvas.Left="187" Canvas.Top="350" HorizontalAlignment="Left" />
+            Height="50" Width="156"
+            Canvas.Left="193" Canvas.Top="350" HorizontalAlignment="Left" />
 
         <Button
             Content="Start"
-            VerticalAlignment="Center"         
+            VerticalAlignment="Center" 
+            FontSize="20"
             Height="50" Width="193"
-            Canvas.Left="397" Canvas.Top="350"
+            Canvas.Left="439" Canvas.Top="350"
             HorizontalAlignment="Left" 
-            Command="{Binding Start}"/>
+            Command="{Binding Start}"
+            IsEnabled="{Binding IsStartEnable}"/>
+
 
         <Rectangle
             Stroke="Black"
             StrokeThickness="1"
-            Canvas.Left="140" Canvas.Top="20"           
-            Height="300" Width="500" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            Canvas.Left="80" Canvas.Top="10"           
+            Height="{Binding BoardHeight}" Width="{Binding BoardWidth}" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
         <ItemsControl Name="Balls" ItemsSource="{Binding Balls, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Canvas>
-                        <Ellipse Stroke="Black" Fill="Red" Width="10" Height="10" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}"/>
+                        <Ellipse Stroke="Black" Fill="Red" Width="{Binding R}" Height="{Binding R}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}"/>
                     </Canvas>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

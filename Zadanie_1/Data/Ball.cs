@@ -18,7 +18,7 @@ namespace Data
         double XSpeed { get; set; }
         double YSpeed { get; set; }
 
-        void Move(double interval);
+        void Move();
         Task CreateMovementTask(int interval, CancellationToken cancellationToken);
 
     }
@@ -79,7 +79,7 @@ namespace Data
             set
             {
                 if (value.Equals(radius)) return;
-                y = value;
+                radius = value;
                 OnPropertyChanged(nameof(R));
 
             }
