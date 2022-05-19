@@ -44,7 +44,7 @@
             Stroke="Black"
             StrokeThickness="1"
             Canvas.Left="140" Canvas.Top="20"           
-            Height="300" Width="500" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            Height="{Binding BoardHeight , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="{Binding BoardWidth , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
         <ItemsControl Name="Balls" ItemsSource="{Binding Balls, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <ItemsControl.ItemTemplate>

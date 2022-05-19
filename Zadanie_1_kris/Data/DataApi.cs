@@ -2,15 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Data
 {
     public abstract class DataAbstractApi
     {
-        public int BoardWidth { get; internal set; }
+        public abstract int BoardWidth { get; set; }
 
-        public int BoardHeight { get; internal set; }
+        public abstract int BoardHeight { get; set; }
 
         public abstract IList GetAll();
 
@@ -30,16 +32,21 @@ namespace Data
 
     internal class Board : DataAbstractApi
     {
-      
         private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
         Random rand = new Random();
-        private CancellationTokenSource cancellationTokenSource;
-        private CancellationToken cancellationToken;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private int boardWidth;
+        private int boardHeight;
 
         internal Board()
         {
-            BoardWidth = 640;
-            BoardHeight = 320;
+            boardWidth = 640;
+            boardHeight = 320;
         }
 
         public override int Count()
@@ -65,6 +72,26 @@ namespace Data
         }
 
         public ObservableCollection<Ball> Balls => balls;
+
+        public override int BoardWidth {
+            get => boardWidth; set
+            {
+                if (value.Equals(BoardHeight)) return;
+                boardHeight = value;
+                OnPropertyChanged(nameof(BoardWidth));
+
+            }
+        }
+        public override int BoardHeight
+        {
+            get => boardHeight; set
+            {
+                if (value.Equals(BoardHeight)) return;
+                boardHeight = value;
+                OnPropertyChanged(nameof(BoardHeight));
+
+            }
+        }
 
         public override IList GetAll()
         {

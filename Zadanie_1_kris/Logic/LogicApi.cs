@@ -54,26 +54,26 @@ namespace Logic
             double down = _data.BoardHeight - diameter;
 
 
-            if (ball.X <= 0)
+            if (ball.X <= 140)
             {
-                ball.X = - ball.X;
+                ball.X = 140; 
                 ball.XSpeed = -ball.XSpeed;
             }
 
             else if (ball.X >= right)
             {
-                ball.X = right - (ball.X - right);
+                ball.X = right;
                 ball.XSpeed = -ball.XSpeed;
             }
-            if (ball.Y <= 0)
+            if (ball.Y <= 20)
             {
-                ball.Y =  -ball.Y;
+                ball.Y =  20;
                 ball.YSpeed = -ball.YSpeed;
             }
 
             else if (ball.Y >= down)
             {
-                ball.Y = down - (ball.Y - down);
+                ball.Y = down;
                 ball.YSpeed = -ball.YSpeed;
             }
         }
