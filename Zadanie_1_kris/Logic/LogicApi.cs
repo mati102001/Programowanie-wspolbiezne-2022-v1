@@ -47,7 +47,7 @@ namespace Logic
         public void WallCollision(IBall ball)
         {
 
-            double diameter = ball.Radius;
+            double diameter = ball.R;
 
             double right = _data.BoardWidth - diameter;
 
@@ -141,15 +141,15 @@ namespace Logic
                 return false;
             }
 
-            return Distance(a, b) <= (a.Radius + b.Radius );
+            return Distance(a, b) <= (a.R + b.R );
         }
 
         internal double Distance(IBall a, IBall b)
         {
-            double x1 = a.X + a.Radius  + a.XSpeed;
-            double y1 = a.Y + a.Radius  + a.YSpeed;
-            double x2 = b.X + b.Radius  + b.XSpeed;
-            double y2 = b.Y + b.Radius  + b.YSpeed;
+            double x1 = a.X + a.R  + a.XSpeed;
+            double y1 = a.Y + a.R  + a.YSpeed;
+            double x2 = b.X + b.R  + b.XSpeed;
+            double y2 = b.Y + b.R  + b.YSpeed;
 
             return Math.Sqrt((Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2)));
         }

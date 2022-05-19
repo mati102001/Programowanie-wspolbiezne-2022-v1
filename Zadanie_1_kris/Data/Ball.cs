@@ -11,7 +11,7 @@ namespace Data
 {
     public interface IBall : INotifyPropertyChanged
     {
-        double Radius { get; }
+        double R { get; set; }
         double Weight { get; }
 
         double X { get; set; }
@@ -85,8 +85,6 @@ namespace Data
 
             }
         }
-
-        public double Radius { get => radius; }
 
         public double Weight { get => weight; }
 
