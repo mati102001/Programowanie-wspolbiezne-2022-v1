@@ -3,7 +3,7 @@ using Data;
 
 namespace DataTest
 {
-    [TestClass]
+  /*  [TestClass]
     public class IBallTest
     {
         private DataAbstractApi api;
@@ -29,5 +29,5 @@ namespace DataTest
             Assert.AreEqual(api.GetBall(0).Y, 103);
         }
 
-    }
+    }*/
 }

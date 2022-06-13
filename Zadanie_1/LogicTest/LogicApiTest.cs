@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace LogicTest
 {
-    [TestClass]
+   /* [TestClass]
     public class LogicTestApi
     {
         private LogicAPI api;
@@ -26,5 +26,5 @@ namespace LogicTest
             Assert.AreEqual(10, list.Count);
         }
 
-    }
+    }*/
 }

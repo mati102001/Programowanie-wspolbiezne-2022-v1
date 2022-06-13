@@ -1,7 +1,6 @@
 ﻿using Data;
 using System;
-
-
+using System.Collections;
 
 namespace Logic
 {
@@ -9,9 +8,12 @@ namespace Logic
     {
         private readonly DataAbstractApi _data;
 
-        public BallService(DataAbstractApi data)
+        private readonly IList balls;
+
+        public BallService(DataAbstractApi data, IList balls)
         {
             _data = data;
+            this.balls = balls;
         }
 
         public void WallCollision(IBall ball)
@@ -26,33 +28,33 @@ namespace Logic
 
             if (ball.X <= 80)
             {
-                ball.X = 80;
-                ball.XSpeed = -ball.XSpeed;
+                ball.ChangeSpeed(-ball.XSpeed, ball.YSpeed);
             }
 
             else if (ball.X >= right)
             {
-                ball.X = right;
-                ball.XSpeed = -ball.XSpeed;
+
+                ball.ChangeSpeed(-ball.XSpeed, ball.YSpeed);
+
             }
             if (ball.Y <= 10)
             {
-                ball.Y = 10;
-                ball.YSpeed = -ball.YSpeed;
+
+                ball.ChangeSpeed(ball.XSpeed, -ball.YSpeed);
             }
 
             else if (ball.Y >= down)
             {
-                ball.Y = down;
-                ball.YSpeed = -ball.YSpeed;
+
+                ball.ChangeSpeed(ball.XSpeed, -ball.YSpeed);
             }
         }
 
         public void BallCollision(IBall ball)
         {
-            for (int i = 0; i < _data.Count(); i++)
+            for (int i = 0; i < balls.Count; i++)
             {
-                IBall secondBall = _data.GetBall(i);
+                IBall secondBall = (IBall) balls[i];
                 if (ball == secondBall)
                 {
                     continue;
@@ -80,13 +82,10 @@ namespace Logic
                     double u2x = 2 * m1 * v1x / (m1 + m2) + (m2 - m1) * v2x / (m1 + m2);
                     double u2y = 2 * m1 * v1y / (m1 + m2) + (m2 - m1) * v2y / (m1 + m2);
 
-                    ball.XSpeed = u1x;
-                    ball.YSpeed = u1y;
-                    secondBall.XSpeed = u2x;
-                    secondBall.YSpeed = u2y;
+                    secondBall.ChangeSpeed(u2x, u2y);
+                    ball.ChangeSpeed(u1x, u1y);
 
                     return;
-
                 }
             }
         }

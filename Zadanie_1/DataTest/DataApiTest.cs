@@ -3,7 +3,7 @@ using Data;
 
 namespace DataTest
 {
-    [TestClass]
+  /*  [TestClass]
     public class DataTest
     {
         private DataAbstractApi api;
@@ -43,5 +43,5 @@ namespace DataTest
             for (int i = 0; i < 10; i++)
             Assert.IsNotNull(api.GetBall(i));
         }
-    }
+    }*/
 }

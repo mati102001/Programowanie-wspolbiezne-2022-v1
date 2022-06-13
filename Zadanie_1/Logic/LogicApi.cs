@@ -3,6 +3,7 @@ using System.Collections;
 using Data;
 using System.Threading;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace Logic
 {
@@ -26,9 +27,7 @@ namespace Logic
         private readonly BallService service;
 
         public BallFactory() : this(DataAbstractApi.CreateDataLayer()) { }
-        public BallFactory(DataAbstractApi data) { _data = data; service = new BallService(_data); }
-
-        private IList balls => _data.GetAll();
+        public BallFactory(DataAbstractApi data) { _data = data; service = new BallService(_data, balls = new ObservableCollection<IBall>()); }
 
         public override double BoardWidth => _data.BoardWidth;
 
@@ -38,14 +37,41 @@ namespace Logic
 
         private CancellationToken cancellationToken;
 
-        public override IList CreateBalls(int number)
-        {
-            _data.createBalls (number);
-            IList ballsTemp = _data.GetAll();
-            for (int i = 0; i < _data.Count(); i++) {
-                _data.GetBall(i).PropertyChanged += PositionChange;
+        private ObservableCollection<IBall> balls { get; set; }
+
+        public override IList CreateBalls(int count)
+        { 
+
+            for (int i = 0; i < count; i++)
+            {
+                bool contain = true;
+                bool licz;
+
+
+                while (contain)
+                {
+                    balls.Add(_data.createBall());
+                    licz = false;
+                    for (int j = 0; j < i; j++)
+                    {
+                        if (balls[i].X <= balls[j].X + balls[j].R && balls[i].X + balls[i].R >= balls[j].X)
+                        {
+                            if (balls[i].Y <= balls[j].Y + balls[j].R && balls[i].Y + balls[i].R >= balls[j].Y)
+                            {
+
+                                licz = true;
+                                balls.Remove(balls[i]);
+                                break;
+                            }
+                        }
+                    }
+                    if (!licz)
+                    {
+                        contain = false;
+                    }
+                }
             }
-            return ballsTemp;
+            return balls;
         }
 
         public override void Start()
@@ -55,7 +81,7 @@ namespace Logic
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
             for (int i = 0; i < balls.Count; i++)
-                _data.GetBall(i).CreateMovementTask(10, cancellationToken);
+                balls[i].CreateMovementTask(10, cancellationToken);
         }
 
         

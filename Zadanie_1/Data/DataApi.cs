@@ -14,13 +14,7 @@ namespace Data
 
         public abstract double BoardHeight { get;  internal set; }
 
-        public abstract IList GetAll();
-
-        public abstract int Count();
-
-        public abstract void createBalls(int number);
-
-        public abstract IBall GetBall(int i);
+        public abstract IBall createBall();
 
         public static DataAbstractApi CreateDataLayer()
         {
@@ -28,8 +22,7 @@ namespace Data
         }
     }
 
-    
-
+   
     internal class Board : DataAbstractApi
     {
         private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
@@ -51,29 +44,21 @@ namespace Data
             BoardHeight = 320;
         }
 
-        public override int Count()
+        public override IBall createBall()
         {
-            return balls.Count;
-        }
-
-        public override void createBalls(int number)
-        {
-            balls.Clear();
             double x;
             double y;
             double xSpeed;
             double ySpeed;
-            for (int i = 0; i < number; i++)
-            {
-                x = rand.Next(140, (int) BoardWidth - 10);
-                y = rand.Next(20, (int) BoardHeight - 10);
-                xSpeed = 0.1 + rand.NextDouble();
-                ySpeed = 0.1 + rand.NextDouble();
-                balls.Add(new Ball(x, y, 20, xSpeed, ySpeed, 50));
-            }
-        }
+           
+               x = rand.Next(140, (int) BoardWidth - 10);
+               y = rand.Next(20, (int) BoardHeight - 10);
+               xSpeed = 0.1 + rand.NextDouble();
+               ySpeed = 0.1 + rand.NextDouble();
 
-        public ObservableCollection<Ball> Balls => balls;
+            IBall ball = new Ball(x, y, 20, xSpeed, ySpeed, 50);
+            return ball;
+        }
 
         public override double BoardWidth
         {
@@ -91,16 +76,5 @@ namespace Data
                 OnPropertyChanged();
             }
         }
-
-        public override IList GetAll()
-        {
-            return balls;
-        }
-
-        public override IBall GetBall(int index)
-        {
-            return balls[index];
-        }
-
     }
 }

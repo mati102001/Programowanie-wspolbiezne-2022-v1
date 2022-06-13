@@ -11,13 +11,13 @@ namespace Data
 {
     public interface IBall : INotifyPropertyChanged
     {
-        double R { get; set; }
+        double R { get;}
         double Weight { get; }
-        double X { get; set; }
-        double Y { get; set; }
-        double XSpeed { get; set; }
-        double YSpeed { get; set; }
-
+        double X { get; }
+        double Y { get;}
+        double XSpeed { get;}
+        double YSpeed { get;}
+        void ChangeSpeed(double xSpeed, double ySpeed);
         void Move();
         Task CreateMovementTask(int interval, CancellationToken cancellationToken);
 
@@ -56,7 +56,7 @@ namespace Data
         public double X
         {
             get => x;
-            set
+            private set
             {
                 if (value.Equals(x)) return;
                 x = value;
@@ -66,7 +66,7 @@ namespace Data
         public double Y
         {
             get => y;
-            set
+            private set
             {
                 if (value.Equals(y)) return;
                 y = value;
@@ -76,7 +76,7 @@ namespace Data
         public double R
         {
             get => radius;
-            set
+           private set
             {
                 if (value.Equals(radius)) return;
                 radius = value;
@@ -87,7 +87,7 @@ namespace Data
 
         public double Weight { get => weight; }
 
-        public double XSpeed { get => xSpeed; set {
+        public double XSpeed { get => xSpeed; private set {
                 if (value.Equals(xSpeed))
                 {
                     return;
@@ -96,7 +96,7 @@ namespace Data
                 xSpeed = value;
             } 
         }
-        public double YSpeed { get => ySpeed; set {
+        public double YSpeed { get => ySpeed; private set {
                 if (value.Equals(ySpeed))
                 {
                     return;
@@ -109,6 +109,14 @@ namespace Data
         {
             X += xSpeed ;
             Y += ySpeed ;
+        }
+
+        public void ChangeSpeed(double xSpeed, double ySpeed)
+        {
+          
+                XSpeed = xSpeed;
+                YSpeed = ySpeed;
+        
         }
 
         public Task CreateMovementTask(int interval, CancellationToken cancellationToken)
