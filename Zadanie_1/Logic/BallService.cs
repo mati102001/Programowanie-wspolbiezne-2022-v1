@@ -60,6 +60,12 @@ namespace Logic
 
                 if (IsCollision(ball, secondBall))
                 {
+                    double relativeX = ball.X - secondBall.X;
+                    double relativeY = ball.Y - secondBall.Y;
+                    double realtiveXSpeed = ball.XSpeed - secondBall.XSpeed;
+                    double realtiveYSpeed = ball.YSpeed - secondBall.YSpeed;
+                    if (relativeX * realtiveXSpeed + relativeY * realtiveYSpeed > 0)
+                        return;
 
                     double m1 = ball.Weight;
                     double m2 = secondBall.Weight;
