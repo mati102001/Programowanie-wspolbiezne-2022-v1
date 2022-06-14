@@ -29,7 +29,11 @@ namespace Logic
         private readonly ConcurrentQueue<IBall> queue;
 
         public BallFactory() : this(DataAbstractApi.CreateDataLayer()) { }
-        public BallFactory(DataAbstractApi data) { _data = data; service = new BallService(_data, balls = new ObservableCollection<IBall>()); }
+        public BallFactory(DataAbstractApi data) { 
+            _data = data;
+            queue = new ConcurrentQueue<IBall>();
+            service = new BallService(_data, 
+            balls = new ObservableCollection<IBall>()); }
 
         public override double BoardWidth => _data.BoardWidth;
 
