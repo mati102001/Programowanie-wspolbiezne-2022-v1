@@ -89,7 +89,7 @@ namespace Logic
             for (int i = 0; i < balls.Count; i++)
             {
                 balls[i].PropertyChanged += PositionChange;
-                balls[i].CreateMovementTask(30, cancellationToken, queue);
+                balls[i].CreateMovementTask(16, cancellationToken, queue);
             }
             _data.CreateLoggingTask(queue, cancellationToken);
                 
