@@ -165,7 +165,7 @@ namespace Data
                 stopwatch.Start();
                 if (!cancellationToken.IsCancellationRequested)
                 {
-                    Move((interval - stopwatch.ElapsedMilliseconds)/10 , queue); // 
+                    Move((interval - stopwatch.ElapsedMilliseconds)/10 , queue); 
                     
                 }
                 stopwatch.Stop();

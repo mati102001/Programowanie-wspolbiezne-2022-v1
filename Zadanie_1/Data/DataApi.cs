@@ -125,7 +125,7 @@ namespace Data
                     date = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff");
                     log = "{" + String.Format("\n\t\"Date\": \"{0}\",\n\t\"Info\":{1}\n", date, diagnostics) + "}";
 
-                        File.AppendAllText(logPath, log);
+                    File.AppendAllText(logPath, log);
  
                 }
                 stopwatch.Stop();

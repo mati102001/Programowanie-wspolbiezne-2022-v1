@@ -43,6 +43,7 @@ namespace Logic
                 }
 
             }
+
             if (ball.Y <= 10)
             {
                 if (ball.YSpeed < 0)

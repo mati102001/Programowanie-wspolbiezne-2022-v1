@@ -24,7 +24,6 @@ namespace Logic
     internal class BallFactory : LogicAPI
     {
         private readonly DataAbstractApi _data;
-        private readonly Mutex mutex = new Mutex();
         private readonly BallService service;
         private readonly ConcurrentQueue<IBall> queue;
 
