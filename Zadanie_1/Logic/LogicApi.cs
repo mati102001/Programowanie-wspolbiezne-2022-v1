@@ -87,6 +87,7 @@ namespace Logic
                 balls[i].CreateMovementTask(10, cancellationToken,queue);
                 balls[i].PropertyChanged += PositionChange;
             }
+            _data.CreateLoggingTask(queue);
                 
         }
 

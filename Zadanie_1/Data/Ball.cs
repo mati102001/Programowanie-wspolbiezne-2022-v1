@@ -129,7 +129,7 @@ namespace Data
 
         public void SaveRequest(ConcurrentQueue<IBall> queue)
         {
-            queue.Enqueue(new Ball(X, Y,radius, xSpeed, ySpeed, Weight));
+            queue.Enqueue(new Ball(X, Y, R, XSpeed, YSpeed, Weight));
         }
 
         private async Task Run(int interval, CancellationToken cancellationToken, ConcurrentQueue<IBall> queue)
@@ -142,7 +142,7 @@ namespace Data
                 if (!cancellationToken.IsCancellationRequested)
                 {
                     Move(interval);
-                    //SaveRequest(queue);
+                    SaveRequest(queue);
                 }
                 stopwatch.Stop();
 
