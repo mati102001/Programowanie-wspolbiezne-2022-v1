@@ -82,7 +82,7 @@ namespace Logic
             cancellationToken = cancellationTokenSource.Token;
             for (int i = 0; i < balls.Count; i++)
             {
-                balls[i].CreateMovementTask(10, cancellationToken);
+                balls[i].CreateMovementTask(30, cancellationToken);
                 balls[i].PropertyChanged += PositionChange;
             }
                 
