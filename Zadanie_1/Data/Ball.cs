@@ -88,7 +88,7 @@ namespace Data
         {
             get
             {
-                lock (ballLock) return R;
+                lock (ballLock) return radius;
             }
            private set
             {
@@ -116,7 +116,7 @@ namespace Data
         }
         public double YSpeed { get
             {
-                lock (ballLock) return YSpeed;
+                lock (ballLock) return ySpeed;
             }
             private set {
                 if (value.Equals(ySpeed))
