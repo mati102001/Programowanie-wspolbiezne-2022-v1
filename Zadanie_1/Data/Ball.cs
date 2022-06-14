@@ -12,12 +12,12 @@ namespace Data
 {
     public interface IBall : INotifyPropertyChanged
     {
-        double R { get;}
+        double R { get; }
         double Weight { get; }
         double X { get; }
-        double Y { get;}
-        double XSpeed { get;}
-        double YSpeed { get;}
+        double Y { get; }
+        double XSpeed { get; }
+        double YSpeed { get; }
         void ChangeSpeed(double xSpeed, double ySpeed);
         void Move(int interval);
         Task CreateMovementTask(int interval, CancellationToken cancellationToken, ConcurrentQueue<IBall> queue);
@@ -38,9 +38,9 @@ namespace Data
 
         public double radius;
 
-        private readonly object locker = new object();
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private readonly object ballLock = new object();
 
         internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -55,10 +55,15 @@ namespace Data
             this.ySpeed = ySpeed;
             this.weight = weight;
         }
-        
+
         public double X
         {
-            get => x;
+            
+            get
+            {
+                lock (ballLock) return x;
+            }
+            
             private set
             {
                 if (value.Equals(x)) return;
@@ -68,7 +73,10 @@ namespace Data
         }
         public double Y
         {
-            get => y;
+            get
+            {
+                lock(ballLock) return y;
+            }
             private set
             {
                 if (value.Equals(y)) return;
@@ -78,7 +86,10 @@ namespace Data
         }
         public double R
         {
-            get => radius;
+            get
+            {
+                lock (ballLock) return R;
+            }
            private set
             {
                 if (value.Equals(radius)) return;
@@ -90,7 +101,11 @@ namespace Data
 
         public double Weight { get => weight; }
 
-        public double XSpeed { get => xSpeed; private set {
+        public double XSpeed { get
+            {
+                lock (ballLock) return xSpeed;  
+            }
+            private set {
                 if (value.Equals(xSpeed))
                 {
                     return;
@@ -99,7 +114,11 @@ namespace Data
                 xSpeed = value;
             } 
         }
-        public double YSpeed { get => ySpeed; private set {
+        public double YSpeed { get
+            {
+                lock (ballLock) return YSpeed;
+            }
+            private set {
                 if (value.Equals(ySpeed))
                 {
                     return;
@@ -110,16 +129,20 @@ namespace Data
 
         public void Move(int interval)
         {
-            X += xSpeed * interval;
-            Y += ySpeed * interval;
+            lock (ballLock)
+            {
+                X += xSpeed * interval;
+                Y += ySpeed * interval;
+            } 
         }
 
         public void ChangeSpeed(double xSpeed, double ySpeed)
         {
-          
+            lock (ballLock)
+            {
                 XSpeed = xSpeed;
                 YSpeed = ySpeed;
-        
+            }
         }
 
         public Task CreateMovementTask(int interval, CancellationToken cancellationToken, ConcurrentQueue<IBall> queue)
