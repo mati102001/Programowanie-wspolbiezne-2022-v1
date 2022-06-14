@@ -30,13 +30,5 @@ namespace DataTest
             Assert.IsNotNull(api.createBall());
             Assert.IsNotNull(api.createBall());
         }
-
-        [TestMethod]
-        public void CreateLogger()
-        {
-            api = DataAbstractApi.CreateDataLayer();
-            Assert.IsNotNull(api.CreateLoggingTask());
-            Assert.IsNotNull(api.CreateLoggingTask());
-        }
     }
 }

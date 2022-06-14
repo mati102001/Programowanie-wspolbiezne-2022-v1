@@ -21,8 +21,8 @@ namespace DataTest
             Assert.IsNotNull(ball.XSpeed);
             Assert.IsNotNull(ball.YSpeed);
             ball.ChangeSpeed(120, 120);
-            Assert.Equals(120, ball.XSpeed);
-            Assert.Equals(120, ball.YSpeed);
+            Assert.AreEqual(120, ball.XSpeed);
+            Assert.AreEqual(120, ball.XSpeed);
         }
 
     }
