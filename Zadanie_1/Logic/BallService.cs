@@ -28,25 +28,36 @@ namespace Logic
 
             if (ball.X <= 80)
             {
-                ball.ChangeSpeed(-ball.XSpeed, ball.YSpeed);
+                if (ball.XSpeed < 0)
+                {
+                    ball.ChangeSpeed(-ball.XSpeed, ball.YSpeed);
+                }
+                
             }
 
             else if (ball.X >= right)
             {
-
-                ball.ChangeSpeed(-ball.XSpeed, ball.YSpeed);
+                if (ball.XSpeed > 0)
+                {
+                    ball.ChangeSpeed(-ball.XSpeed, ball.YSpeed);
+                }
 
             }
             if (ball.Y <= 10)
             {
-
-                ball.ChangeSpeed(ball.XSpeed, -ball.YSpeed);
+                if (ball.YSpeed < 0)
+                {
+                    ball.ChangeSpeed(ball.XSpeed, -ball.YSpeed);
+                }
             }
 
             else if (ball.Y >= down)
             {
-
-                ball.ChangeSpeed(ball.XSpeed, -ball.YSpeed);
+                if (ball.YSpeed > 0)
+                {
+                    ball.ChangeSpeed(ball.XSpeed, -ball.YSpeed);
+                }
+                
             }
         }
 
