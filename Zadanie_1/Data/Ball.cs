@@ -125,16 +125,24 @@ namespace Data
             }  
         }
 
+        delegate int AddOperation(int x, int y);
+
         public void Move(double time, ConcurrentQueue<IBall> queue)
         {
+
             lock (ballLock)
             {
-                X += xSpeed * time;
-                Y += ySpeed * time;
+                ImmutableObjectAttribute(X, Y, time);                    
                 OnPropertyChanged(nameof(X));
                 OnPropertyChanged(nameof(Y));
                 SaveRequest(queue);
             }
+        }
+
+        private void ImmutableObjectAttribute(double x, double y, double time)
+        {
+                X += xSpeed * time;
+                Y += ySpeed * time;        
         }
 
         public void ChangeSpeed(double xSpeed, double ySpeed)
