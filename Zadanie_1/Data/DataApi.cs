@@ -21,6 +21,10 @@ namespace Data
 
         public abstract IBall createBall();
 
+        public abstract Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue);
+
+        public abstract void AppendObjectToJSONFile(string filename, string newJsonObject);
+
         public static DataAbstractApi CreateDataLayer()
         {
             return new Board();
@@ -67,6 +71,7 @@ namespace Data
             double xSpeed;
             double ySpeed;
 
+            stop = false;
             x = rand.Next(140, (int)BoardWidth - 10);
             y = rand.Next(20, (int)BoardHeight - 10);
             xSpeed = 0.1 + rand.NextDouble();
@@ -94,6 +99,12 @@ namespace Data
                 boardHeight = value;
                 OnPropertyChanged();
             }
+        }
+
+        public override Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue)
+        {
+            stop = false;
+            return CallLogger(logQueue);
         }
 
         internal async Task CallLogger(ConcurrentQueue<IBall> logQueue)
@@ -124,6 +135,37 @@ namespace Data
                 }
                 stopwatch.Stop();
                 await Task.Delay((int)(stopwatch.ElapsedMilliseconds));
+            }
+        }
+
+        public override void AppendObjectToJSONFile(string filename, string newJsonObject)
+        {
+            using (StreamWriter sw = new StreamWriter(filename, true))
+            {
+                sw.WriteLine("[]");
+            }
+
+            string content;
+            using (StreamReader sr = File.OpenText(filename))
+            {
+                content = sr.ReadToEnd();
+            }
+
+            content = content.TrimEnd();
+            content = content.Remove(content.Length - 1, 1);
+
+            if (content.Length == 1)
+            {
+                content = String.Format("{0}\n{1}\n]\n", content.Trim(), newJsonObject);
+            }
+            else
+            {
+                content = String.Format("{0},\n{1}\n]\n", content.Trim(), newJsonObject);
+            }
+
+            using (StreamWriter sw = File.CreateText(filename))
+            {
+                sw.Write(content);
             }
         }
     }

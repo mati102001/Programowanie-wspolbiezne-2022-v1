@@ -4,6 +4,7 @@ using Data;
 using System.Threading;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Collections.Concurrent;
 
 namespace Logic
 {
@@ -25,6 +26,7 @@ namespace Logic
         private readonly DataAbstractApi _data;
         private readonly Mutex mutex = new Mutex();
         private readonly BallService service;
+        private readonly ConcurrentQueue<IBall> queue;
 
         public BallFactory() : this(DataAbstractApi.CreateDataLayer()) { }
         public BallFactory(DataAbstractApi data) { _data = data; service = new BallService(_data, balls = new ObservableCollection<IBall>()); }
@@ -82,7 +84,7 @@ namespace Logic
             cancellationToken = cancellationTokenSource.Token;
             for (int i = 0; i < balls.Count; i++)
             {
-                balls[i].CreateMovementTask(30, cancellationToken);
+                balls[i].CreateMovementTask(10, cancellationToken,queue);
                 balls[i].PropertyChanged += PositionChange;
             }
                 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -18,8 +19,8 @@ namespace Data
         double XSpeed { get;}
         double YSpeed { get;}
         void ChangeSpeed(double xSpeed, double ySpeed);
-        void Move();
-        Task CreateMovementTask(int interval, CancellationToken cancellationToken);
+        void Move(int interval);
+        Task CreateMovementTask(int interval, CancellationToken cancellationToken, ConcurrentQueue<IBall> queue);
 
     }
 
@@ -36,6 +37,8 @@ namespace Data
         private double weight;
 
         public double radius;
+
+        private readonly object locker = new object();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -105,10 +108,10 @@ namespace Data
             }  
         }
 
-        public void Move()
+        public void Move(int interval)
         {
-            X += xSpeed ;
-            Y += ySpeed ;
+            X += xSpeed * interval;
+            Y += ySpeed * interval;
         }
 
         public void ChangeSpeed(double xSpeed, double ySpeed)
@@ -119,12 +122,17 @@ namespace Data
         
         }
 
-        public Task CreateMovementTask(int interval, CancellationToken cancellationToken)
+        public Task CreateMovementTask(int interval, CancellationToken cancellationToken, ConcurrentQueue<IBall> queue)
         {
-            return Run(interval, cancellationToken);
+            return Run(interval, cancellationToken, queue);
         }
 
-        private async Task Run(int interval, CancellationToken cancellationToken)
+        public void SaveRequest(ConcurrentQueue<IBall> queue)
+        {
+            queue.Enqueue(new Ball(X, Y,radius, xSpeed, ySpeed, Weight));
+        }
+
+        private async Task Run(int interval, CancellationToken cancellationToken, ConcurrentQueue<IBall> queue)
         {
             
             while (!cancellationToken.IsCancellationRequested)
@@ -133,7 +141,8 @@ namespace Data
                 stopwatch.Start();
                 if (!cancellationToken.IsCancellationRequested)
                 {
-                    Move();
+                    Move(interval);
+                    //SaveRequest(queue);
                 }
                 stopwatch.Stop();
 
