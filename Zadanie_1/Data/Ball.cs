@@ -68,7 +68,6 @@ namespace Data
             {
                 if (value.Equals(x)) return;
                 x = value;
-                OnPropertyChanged(nameof(X));
             }
         }
         public double Y
@@ -81,7 +80,6 @@ namespace Data
             {
                 if (value.Equals(y)) return;
                 y = value;
-                OnPropertyChanged(nameof(Y));
             }
         }
         public double R
@@ -133,6 +131,8 @@ namespace Data
             {
                 X += xSpeed * time;
                 Y += ySpeed * time;
+                OnPropertyChanged(nameof(X));
+                OnPropertyChanged(nameof(Y));
                 SaveRequest(queue);
             }
         }
@@ -165,7 +165,7 @@ namespace Data
                 stopwatch.Start();
                 if (!cancellationToken.IsCancellationRequested)
                 {
-                    Move((interval - stopwatch.ElapsedMilliseconds) / 20, queue);
+                    Move((interval - stopwatch.ElapsedMilliseconds) / 5, queue);
                     
                 }
                 stopwatch.Stop();

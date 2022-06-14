@@ -88,10 +88,10 @@ namespace Logic
             cancellationToken = cancellationTokenSource.Token;
             for (int i = 0; i < balls.Count; i++)
             {
-                balls[i].CreateMovementTask(30, cancellationToken, queue);
                 balls[i].PropertyChanged += PositionChange;
+                balls[i].CreateMovementTask(30, cancellationToken, queue);
             }
-            _data.CreateLoggingTask(queue);
+            _data.CreateLoggingTask(queue, cancellationToken);
                 
         }
 
@@ -100,15 +100,9 @@ namespace Logic
         public void PositionChange(object sender, PropertyChangedEventArgs args)
         {
             IBall ball = (IBall)sender;
-            mutex.WaitOne();
-            if (ball == null)
-            {
-                mutex.ReleaseMutex();
-                return;
-            }
             service.WallCollision(ball);
             service.BallCollision(ball);
-            mutex.ReleaseMutex();
+           
         }
 
     }

@@ -21,7 +21,7 @@ namespace Data
 
         public abstract IBall createBall();
 
-        public abstract Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue);
+        public abstract Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue, CancellationToken cancellationToken);
 
         public abstract void AppendObjectToJSONFile(string filename, string newJsonObject);
 
@@ -46,7 +46,6 @@ namespace Data
 
         private readonly Stopwatch stopwatch;
 
-        private bool stop;
 
         internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -71,7 +70,6 @@ namespace Data
             double xSpeed;
             double ySpeed;
 
-            stop = false;
             x = rand.Next(140, (int)BoardWidth - 10);
             y = rand.Next(20, (int)BoardHeight - 10);
             xSpeed = 0.1 + rand.NextDouble();
@@ -101,13 +99,12 @@ namespace Data
             }
         }
 
-        public override Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue)
+        public override Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue, CancellationToken cancellationToken)
         {
-            stop = false;
-            return CallLogger(logQueue);
+            return CallLogger(logQueue, cancellationToken);
         }
 
-        internal async Task CallLogger(ConcurrentQueue<IBall> logQueue)
+        internal async Task CallLogger(ConcurrentQueue<IBall> logQueue, CancellationToken cancellationToken)
         {
             if (File.Exists(logPath) && newSession)
             {
@@ -117,7 +114,7 @@ namespace Data
             string diagnostics;
             string date;
             string log;
-            while (!stop)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 stopwatch.Reset();
                 stopwatch.Start();
@@ -128,13 +125,11 @@ namespace Data
                     date = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff");
                     log = "{" + String.Format("\n\t\"Date\": \"{0}\",\n\t\"Info\":{1}\n", date, diagnostics) + "}";
 
-                    lock (this)
-                    {
                         File.AppendAllText(logPath, log);
-                    }
+ 
                 }
                 stopwatch.Stop();
-                await Task.Delay((int)(stopwatch.ElapsedMilliseconds));
+                await Task.Delay(1);
             }
         }
 
