@@ -72,8 +72,8 @@ namespace Data
 
             x = rand.Next(140, (int)BoardWidth - 10);
             y = rand.Next(20, (int)BoardHeight - 10);
-            xSpeed = 1 + rand.NextDouble();
-            ySpeed = 1 + rand.NextDouble();
+            xSpeed = rand.Next(-5, 5)*rand.NextDouble();
+            ySpeed = rand.Next(-5, 5)*rand.NextDouble();
 
             IBall ball = new Ball(x, y, 20, xSpeed, ySpeed, 50);
             return ball;

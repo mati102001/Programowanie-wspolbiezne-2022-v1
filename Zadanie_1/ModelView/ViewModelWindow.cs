@@ -56,8 +56,8 @@ namespace ModelView
                     value = 0;
                     IsStartEnable = false;
                 }
-                if (value > 2000)
-                    value = 2000;
+                if (value > 20)
+                    value = 20;
                 _ballNumber = value;
                 OnPropertyChanged(nameof(BallNumber));
             }
