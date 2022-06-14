@@ -3,7 +3,7 @@ using Data;
 
 namespace DataTest
 {
-  /*  [TestClass]
+    [TestClass]
     public class DataTest
     {
         private DataAbstractApi api;
@@ -27,21 +27,16 @@ namespace DataTest
         public void CreateBalls()
         {
             api = DataAbstractApi.CreateDataLayer();
-            api.createBalls(5);
-            Assert.IsNotNull(api.GetAll());
-            Assert.AreEqual(5, api.Count());
-            api.createBalls(10);
-            Assert.IsNotNull(api.GetAll());
-            Assert.AreEqual(10, api.Count());
+            Assert.IsNotNull(api.createBall());
+            Assert.IsNotNull(api.createBall());
         }
 
         [TestMethod]
-        public void GetBallTest()
+        public void CreateLogger()
         {
             api = DataAbstractApi.CreateDataLayer();
-            api.createBalls(10);
-            for (int i = 0; i < 10; i++)
-            Assert.IsNotNull(api.GetBall(i));
+            Assert.IsNotNull(api.CreateLoggingTask());
+            Assert.IsNotNull(api.CreateLoggingTask());
         }
-    }*/
+    }
 }
