@@ -19,7 +19,7 @@ namespace Data
         double XSpeed { get; }
         double YSpeed { get; }
         void ChangeSpeed(double xSpeed, double ySpeed);
-        void Move(int interval);
+        void Move(double time, ConcurrentQueue<IBall> queue);
         Task CreateMovementTask(int interval, CancellationToken cancellationToken, ConcurrentQueue<IBall> queue);
 
     }
@@ -127,13 +127,14 @@ namespace Data
             }  
         }
 
-        public void Move(int interval)
+        public void Move(double time, ConcurrentQueue<IBall> queue)
         {
             lock (ballLock)
             {
-                X += xSpeed * interval;
-                Y += ySpeed * interval;
-            } 
+                X += xSpeed * time;
+                Y += ySpeed * time;
+                SaveRequest(queue);
+            }
         }
 
         public void ChangeSpeed(double xSpeed, double ySpeed)
@@ -164,14 +165,15 @@ namespace Data
                 stopwatch.Start();
                 if (!cancellationToken.IsCancellationRequested)
                 {
-                    Move(interval);
-                    SaveRequest(queue);
+                    Move((interval - stopwatch.ElapsedMilliseconds) / 20, queue);
+                    
                 }
                 stopwatch.Stop();
 
                 await Task.Delay((int)(interval - stopwatch.ElapsedMilliseconds), cancellationToken);
             }
         }
+
 
         private readonly Stopwatch stopwatch = new Stopwatch();
     }
