@@ -25,23 +25,18 @@ namespace Logic
     {
         private readonly DataAbstractApi _data;
         private readonly BallService service;
-        private readonly ConcurrentQueue<IBall> queue;
+
 
         private ObservableCollection<IBall> balls { get; set; }
         public BallFactory() : this(DataAbstractApi.CreateDataLayer()) { }
         public BallFactory(DataAbstractApi data) { 
             _data = data;
-            queue = new ConcurrentQueue<IBall>();
             service = new BallService(_data, 
             balls = new ObservableCollection<IBall>()); }
 
         public override double BoardWidth => _data.BoardWidth;
 
         public override double BoardHeight => _data.BoardHeight;
-
-        private CancellationTokenSource cancellationTokenSource;
-
-        private CancellationToken cancellationToken;
 
         public override IList CreateBalls(int count)
         {
@@ -77,16 +72,13 @@ namespace Logic
         }
         public override void Start()
         {
-            if(cancellationTokenSource != null)
-                cancellationTokenSource.Cancel();
-            cancellationTokenSource = new CancellationTokenSource();
-            cancellationToken = cancellationTokenSource.Token;
+            _data.setUpCancellationToken();
             for (int i = 0; i < balls.Count; i++)
             {
+                _data.callMovementTask(balls[i]);
                 balls[i].PropertyChanged += PositionChange;
-                balls[i].CreateMovementTask(16, cancellationToken, queue);
             }
-            _data.CreateLoggingTask(queue, cancellationToken);     
+            _data.CreateLoggingTask();     
         }
         public void PositionChange(object sender, PropertyChangedEventArgs args)
         {

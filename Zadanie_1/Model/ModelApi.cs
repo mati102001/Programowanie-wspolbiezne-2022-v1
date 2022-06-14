@@ -10,12 +10,13 @@ namespace ModelAPI
     {
         private readonly LogicAPI _logic;
 
+        public override IList Balls(int ballNumber)
+           => _logic.CreateBalls(ballNumber);
+
         public override double BoardWidth => _logic.BoardWidth;
 
         public override double BoardHeight => _logic.BoardHeight;
 
-        public override IList Balls(int ballNumber)
-           => _logic.CreateBalls(ballNumber);
         public override void Start(IList balls) => _logic.Start();
 
       

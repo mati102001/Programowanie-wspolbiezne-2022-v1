@@ -21,7 +21,11 @@ namespace Data
 
         public abstract IBall createBall();
 
-        public abstract Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue, CancellationToken cancellationToken);
+        public abstract Task CreateLoggingTask();
+
+        public abstract void setUpCancellationToken();
+
+        public abstract void callMovementTask(IBall ball);
 
         public abstract void AppendObjectToJSONFile(string filename, string newJsonObject);
 
@@ -34,8 +38,6 @@ namespace Data
 
     internal class Board : DataAbstractApi
     {
-        private ObservableCollection<Ball> balls = new ObservableCollection<Ball>();
-
         Random rand = new Random();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -46,6 +48,11 @@ namespace Data
 
         private readonly Stopwatch stopwatch;
 
+        private CancellationToken cancellationToken;
+
+        private CancellationTokenSource cancellationTokenSource;
+
+        private ConcurrentQueue<IBall> logQueue;
 
         internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -61,6 +68,8 @@ namespace Data
             BoardHeight = 320;
             newSession = true;
             stopwatch = new Stopwatch();
+            cancellationToken = new CancellationToken();
+            logQueue = new ConcurrentQueue<IBall>();
         }
 
         public override IBall createBall()
@@ -77,6 +86,19 @@ namespace Data
 
             IBall ball = new Ball(x, y, 20, xSpeed, ySpeed, 50);
             return ball;
+        }
+
+        public override void callMovementTask(IBall ball)
+        {
+            ball.CreateMovementTask(16, cancellationToken, logQueue);
+        }
+
+        public override void setUpCancellationToken()
+        {
+            if (cancellationTokenSource != null)
+                cancellationTokenSource.Cancel();
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
         }
 
         public override double BoardWidth
@@ -99,12 +121,12 @@ namespace Data
             }
         }
 
-        public override Task CreateLoggingTask(ConcurrentQueue<IBall> logQueue, CancellationToken cancellationToken)
+        public override Task CreateLoggingTask()
         {
-            return CallLogger(logQueue, cancellationToken);
+            return CallLogger();
         }
 
-        internal async Task CallLogger(ConcurrentQueue<IBall> logQueue, CancellationToken cancellationToken)
+        internal async Task CallLogger()
         {
             if (File.Exists(logPath) && newSession)
             {
@@ -121,15 +143,18 @@ namespace Data
                 logQueue.TryDequeue(out IBall logObject);
                 if (logObject != null)
                 {
-                    diagnostics = JsonSerializer.Serialize(logObject);
-                    date = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff");
-                    log = "{" + String.Format("\n\t\"Date\": \"{0}\",\n\t\"Info\":{1}\n", date, diagnostics) + "}";
+                    if (!logQueue.IsEmpty)
+                    {
+                        diagnostics = JsonSerializer.Serialize(logObject);
+                        date = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff");
+                        log = "{" + String.Format("\n\t\"Date\": \"{0}\",\n\t\"Info\":{1}\n", date, diagnostics) + "}";
 
-                    File.AppendAllText(logPath, log);
- 
+                        File.AppendAllText(logPath, log);
+
+                    }
+                    stopwatch.Stop();
+                    await Task.Delay(10);
                 }
-                stopwatch.Stop();
-                await Task.Delay(1);
             }
         }
 
